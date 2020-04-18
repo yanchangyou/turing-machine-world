@@ -1,46 +1,19 @@
 package org.lingxivm.v0.v1;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 灵犀图灵机 v0.1
  */
 public class LingXiVM {
-    public static void main(String[] args) {
 
-        // 带子
-        int[] tape = new int[3];
-
-        //program
-        Map<String, String> code = new HashMap();
-        // key: status,inputValue
-        // value: status, outputValue，forwardOrBackward
-        code.put("0,0", "1,1,+");
-        code.put("0,1", "1,1,+");
-        code.put("1,0", "1,1,+");
-        code.put("1,1", "1,1,+");
-
-        code.put("-21,0", "0,,");
-        code.put("-21,1", "0,,");
-
-        printTape(tape);
-        run(tape, code);
-        printTape(tape);
-    }
-
-    private static void printTape(int[] tape) {
-        System.out.print("tape : ");
-        for (int i = 0; i < tape.length; i++) {
-            if (i != 0) {
-                System.out.print(",");
-            }
-            System.out.print(tape[i]);
-        }
-        System.out.println();
-    }
-
-    private static void run(int[] tape, Map<String, String> code) {
+    /**
+     * 图灵机运行：
+     *
+     * @param tape
+     * @param map
+     */
+    public static void run(int[] tape, Map<String, String> map) {
         //内部状态
         int status = 1;// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-11：超过最小边界，-21：超过最大边界
 
@@ -48,7 +21,7 @@ public class LingXiVM {
 
         while (true) {
             int value = tape[index];
-            String next = code.get(status + "," + value);
+            String next = map.get(status + "," + value);
             String[] nextParts = next.split(",", -1);
 
             int newStatus = Integer.valueOf(nextParts[0]);
