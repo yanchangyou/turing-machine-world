@@ -1,6 +1,5 @@
-package org.lingxivm.v0.v1;
+package org.lingxivm.v0.v2;
 
-import org.lingxivm.v0.vx.LingXiVM;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -23,8 +22,8 @@ public class LingXiVMTest {
         map.put("1,0", "1,1,+");
         map.put("1,1", "1,1,+");
 
-        map.put("-21,0", "0,,");
-        map.put("-21,1", "0,,");
+        map.put("21,0", "0,1,0");
+        map.put("21,1", "0,1,0");
 
         printTape(tape);
         LingXiVM.run(tape, map);

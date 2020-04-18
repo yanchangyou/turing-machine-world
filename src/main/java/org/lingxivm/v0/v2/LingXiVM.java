@@ -1,9 +1,9 @@
-package org.lingxivm.v0.v1;
+package org.lingxivm.v0.v2;
 
 import java.util.Map;
 
 /**
- * 灵犀图灵机 v0.1
+ * 灵犀图灵机 v0.2
  */
 public class LingXiVM {
 
@@ -27,6 +27,9 @@ public class LingXiVM {
             int newStatus = Integer.valueOf(nextParts[0]);
 
             status = newStatus;
+            int outputValue = Integer.valueOf(nextParts[1]);
+
+            tape[index] = outputValue;
 
             //虚拟机内部状态
             if (status == 0) {
@@ -38,10 +41,6 @@ public class LingXiVM {
                 break;
             }
 
-            int outputValue = Integer.valueOf(nextParts[1]);
-
-            tape[index] = outputValue;
-
             String forwardOrBackward = nextParts[2];
             //移动方向：向前、向后、不动
             if ("+".equalsIgnoreCase(forwardOrBackward)) {//向前，否则向后
@@ -51,11 +50,11 @@ public class LingXiVM {
             }
 
             //边界状态设置
-            if (index < 0) {// 超过最小边界
-                status = -11;
+            if (index == 0) {// 超过最小边界
+                status = 11;
             }
-            if (index >= tape.length) { //超过最大边界
-                status = -21;
+            if (index == tape.length - 1) { //超过最大边界
+                status = 21;
             }
 
             // 边界异常
