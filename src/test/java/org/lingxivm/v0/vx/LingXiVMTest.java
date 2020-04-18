@@ -8,7 +8,7 @@ import java.util.Map;
 public class LingXiVMTest {
 
     @Test
-    void run() {
+    public void run() {
 
         // 带子
         int[] tape = new int[3];
