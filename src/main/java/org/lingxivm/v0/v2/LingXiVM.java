@@ -1,9 +1,9 @@
-package org.lingxivm.v0.vx;
+package org.lingxivm.v0.v2;
 
 import java.util.Map;
 
 /**
- * 灵犀图灵机 v0.x
+ * 灵犀图灵机 v0.2
  */
 public class LingXiVM {
 
