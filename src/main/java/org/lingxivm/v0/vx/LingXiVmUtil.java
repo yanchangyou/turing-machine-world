@@ -62,7 +62,7 @@ public class LingXiVmUtil {
         int endEndIndex = rule.indexOf(']');
 
         if (beginBeginIndex > -1 && endEndIndex > -1) {
-            String[] beginEnd = rule.substring(beginBeginIndex + 1, endEndIndex - 1).split("\\s*,\\s*");
+            String[] beginEnd = rule.substring(beginBeginIndex + 1, endEndIndex).split("\\s*,\\s*");
 
             int ruleBeginIndex = Integer.valueOf(beginEnd[0]);
             int ruleEndIndex = Integer.valueOf(beginEnd[1]);
@@ -75,7 +75,7 @@ public class LingXiVmUtil {
 
         Map<String, String> map = new HashMap();
         for (int i = 0; i < rules.length; i++) {
-            String[] ruleItem = rules[i].split("\\s*(,|(->))\\s*", -1);
+            String[] ruleItem = rules[i].trim().split("\\s*(,|(->))\\s*", -1);
             LingXiVmRuleItem vmRuleItem = new LingXiVmRuleItem();
             vmRuleItem.setFrom(new LingXiVmRuleItemFrom(ruleItem[0], ruleItem[1]));
             vmRuleItem.setTo(new LingXiVmRuleItemTo(ruleItem[2], ruleItem[3], ruleItem[4]));

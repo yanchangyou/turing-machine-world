@@ -20,7 +20,6 @@ public class LingXiVm {
 
         String[] cells = tape.split(",", -1);
 
-
         LingXiVmRule vmRule = LingXiVmUtil.parseRule(rule);
         run(cells, vmRule);
 
@@ -38,10 +37,11 @@ public class LingXiVm {
         //内部状态
         String status = "1";// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-101：超过最小边界，-102：超过最大边界
 
-        int index = 0;
+        int index = rule.getTapeBeginIndex() == null ? 0 : rule.getTapeBeginIndex();
 
         System.out.println("LingXiVM begin run:");
         while (true) {
+
             String value = cells[index];
 
             LingXiVmRuleItemTo to = rule.getRuleTo(new LingXiVmRuleItemFrom(status, value));
@@ -52,11 +52,12 @@ public class LingXiVm {
 
             //虚拟机内部状态
             if ("0".equals(status)) {
-                System.out.println("LingXiVM stop!");
+                System.out.println("LingXiVM-stop!");
                 break;
             }
+
             if (status.startsWith("-")) {
-                System.out.println("LingXiVM error!");
+                System.out.println("LingXiVM-ERROR:in error status:" + status);
                 break;
             }
 
@@ -67,17 +68,13 @@ public class LingXiVm {
                 index--;
             }
 
-            //边界状态设置
-            if (index == 0) {// 超过最小边界
-                status = "11";
-            }
-            if (index == cells.length - 1) { //超过最大边界
-                status = "21";
+            if (rule.getTapeEndIndex() != null && index > rule.getTapeEndIndex()) {
+                break;
             }
 
             // 边界异常
             if (index < 0 || index >= cells.length) {
-                System.out.println("ERROR : index out off bounder");
+                System.out.println("LingXiVM-ERROR : index out off bounder");
                 break;
             }
         }

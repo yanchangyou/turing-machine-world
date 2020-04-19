@@ -14,29 +14,29 @@ public class LingXiVmRule {
     }
 
     //带子开始位置
-    int tapeBeginIndex;
+    Integer tapeBeginIndex;
 
     //带子开始位置
-    int tapeEndIndex;
+    Integer tapeEndIndex;
 
     /**
      * 规则项
      */
     List<LingXiVmRuleItem> ruleItems;
 
-    public int getTapeBeginIndex() {
+    public Integer getTapeBeginIndex() {
         return tapeBeginIndex;
     }
 
-    public void setTapeBeginIndex(int tapeBeginIndex) {
+    public void setTapeBeginIndex(Integer tapeBeginIndex) {
         this.tapeBeginIndex = tapeBeginIndex;
     }
 
-    public int getTapeEndIndex() {
+    public Integer getTapeEndIndex() {
         return tapeEndIndex;
     }
 
-    public void setTapeEndIndex(int tapeEndIndex) {
+    public void setTapeEndIndex(Integer tapeEndIndex) {
         this.tapeEndIndex = tapeEndIndex;
     }
 
