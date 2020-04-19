@@ -1,6 +1,6 @@
 package org.lingxivm.v0.v1;
 
-import org.lingxivm.v0.vx.LingXiVM;
+import org.lingxivm.v0.v1.LingXiVM;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;

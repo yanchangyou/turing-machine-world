@@ -2,42 +2,33 @@ package org.lingxivm.v0.vx;
 
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LingXiVMTest {
 
     @Test
     public void run() {
 
         // 带子
-        int[] tape = new int[3];
+        String tape = "0,0,0,0";
+        //规则
+        String rule = ""
+                + "0,0->1,1,+\r\n"
+                + "0,1->1,1,+\r\n"
+                + "1,0->1,1,+\r\n"
+                + "1,1->1,1,+\r\n"
+                + "21,0->0,1,\r\n"
+                + "21,1->0,1,\r\n";
 
-        //program
-        Map<String, String> map = new HashMap();
-        // key: status,inputValue
-        // value: status, outputValue，forwardOrBackward
-        map.put("0,0", "1,1,+");
-        map.put("0,1", "1,1,+");
-        map.put("1,0", "1,1,+");
-        map.put("1,1", "1,1,+");
-
-        map.put("21,0", "0,1,");
-        map.put("21,1", "0,1,");
-
+        printRule(rule);
         printTape(tape);
-        LingXiVM.run(tape, map);
-        printTape(tape);
+        String result = LingXiVM.run(tape, rule);
+        printTape(result);
     }
 
-    private static void printTape(int[] tape) {
-        System.out.print("tape : ");
-        for (int i = 0; i < tape.length; i++) {
-            if (i != 0) {
-                System.out.print(",");
-            }
-            System.out.print(tape[i]);
-        }
-        System.out.println();
+    private static void printTape(String tape) {
+        System.out.println("tape : " + tape);
+    }
+
+    private static void printRule(String rule) {
+        System.out.println("rule:\r\n" + rule);
     }
 }

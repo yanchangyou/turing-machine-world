@@ -1,44 +1,68 @@
 package org.lingxivm.v0.vx;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 灵犀图灵机 v0.x
+ * 灵犀图灵机
  */
 public class LingXiVM {
 
     /**
-     * 图灵机运行：
+     * 图灵机运行
+     * 全字符串入参
      *
-     * @param tape
+     * @param tape 逗号分割
+     * @param rule oldStatus,oldValue->newStatus,newValue,forward\r\n next
+     */
+    public static String run(String tape, String rule) {
+
+        String[] cells = tape.split(",", -1);
+        String[] rules = rule.split("\\\r\\\n|\\\r|\\\n");
+
+        Map<String, String> map = new HashMap();
+        for (int i = 0; i < rules.length; i++) {
+            String[] ruleItem = rules[i].split("\\s*(,|(->))\\s*", -1);
+            map.put(ruleItem[0] + "," + ruleItem[1], ruleItem[2] + "," + ruleItem[3] + "," + ruleItem[4]);
+        }
+        run(cells, map);
+
+        return LingXiVMUtil.cellsToString(cells);
+    }
+
+    /**
+     * 图灵机运行
+     *
+     * @param cells
      * @param map
      */
-    public static void run(int[] tape, Map<String, String> map) {
+    private static void run(String[] cells, Map<String, String> map) {
 
         //内部状态
-        int status = 1;// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-101：超过最小边界，-102：超过最大边界
+        String status = "1";// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-101：超过最小边界，-102：超过最大边界
 
         int index = 0;
 
+        System.out.println("LingXiVM begin run:");
         while (true) {
-            int value = tape[index];
+            String value = cells[index];
             String next = map.get(status + "," + value);
             String[] nextParts = next.split(",", -1);
 
-            int newStatus = Integer.valueOf(nextParts[0]);
+            String newStatus = nextParts[0];
 
             status = newStatus;
-            int outputValue = Integer.valueOf(nextParts[1]);
+            String outputValue = nextParts[1];
 
-            tape[index] = outputValue;
+            cells[index] = outputValue;
 
             //虚拟机内部状态
-            if (status == 0) {
-                System.out.println("lingxivm stop!");
+            if ("0".equals(status)) {
+                System.out.println("LingXiVM stop!");
                 break;
             }
-            if (status < 0) {
-                System.out.println("lingxivm error!");
+            if (status.startsWith("-")) {
+                System.out.println("LingXiVM error!");
                 break;
             }
 
@@ -52,14 +76,14 @@ public class LingXiVM {
 
             //边界状态设置
             if (index == 0) {// 超过最小边界
-                status = 11;
+                status = "11";
             }
-            if (index == tape.length - 1) { //超过最大边界
-                status = 21;
+            if (index == cells.length - 1) { //超过最大边界
+                status = "21";
             }
 
             // 边界异常
-            if (index < 0 || index >= tape.length) {
+            if (index < 0 || index >= cells.length) {
                 System.out.println("ERROR : index out off bounder");
                 break;
             }
