@@ -65,7 +65,7 @@ public class LingXiVmUtil {
             String[] beginEnd = rule.substring(beginBeginIndex + 1, endEndIndex).split("\\s*,\\s*");
 
             int ruleBeginIndex = Integer.valueOf(beginEnd[0]);
-            int ruleEndIndex = Integer.valueOf(beginEnd[1]);
+            int ruleEndIndex = beginEnd.length == 1 ? beginBeginIndex : Integer.valueOf(beginEnd[1]);
 
             vmRule.setTapeBeginIndex(ruleBeginIndex);
             vmRule.setTapeEndIndex(ruleEndIndex);

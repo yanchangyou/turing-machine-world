@@ -33,7 +33,9 @@ public class LingXiVmLib {
      * @return
      */
     public static String getResetRule(Integer beginIndex, Integer endIndex, String value) {
-        String rule = ((beginIndex == null) ? "" : ("[" + beginIndex + "," + endIndex + "]\r\n"))
+        String rule = ((beginIndex == null) ?
+                "" :
+                ("[" + beginIndex + ((beginIndex == endIndex) ? "" : "," + endIndex) + "]\r\n"))
                 + "  1,0->1,__RESET_VALUE__,+;\r\n"
                 + "  1,1->1,__RESET_VALUE__,+;\r\n";
         return rule.replaceAll("__RESET_VALUE__", value);
