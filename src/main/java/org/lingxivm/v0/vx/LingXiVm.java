@@ -1,12 +1,13 @@
 package org.lingxivm.v0.vx;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.lingxivm.v0.vx.vm.rule.LingXiVmRule;
+import org.lingxivm.v0.vx.vm.rule.LingXiVmRuleItemFrom;
+import org.lingxivm.v0.vx.vm.rule.LingXiVmRuleItemTo;
 
 /**
  * 灵犀图灵机
  */
-public class LingXiVM {
+public class LingXiVm {
 
     /**
      * 图灵机运行
@@ -18,25 +19,21 @@ public class LingXiVM {
     public static String run(String tape, String rule) {
 
         String[] cells = tape.split(",", -1);
-        String[] rules = rule.split("\\\r\\\n|\\\r|\\\n");
 
-        Map<String, String> map = new HashMap();
-        for (int i = 0; i < rules.length; i++) {
-            String[] ruleItem = rules[i].split("\\s*(,|(->))\\s*", -1);
-            map.put(ruleItem[0] + "," + ruleItem[1], ruleItem[2] + "," + ruleItem[3] + "," + ruleItem[4]);
-        }
-        run(cells, map);
 
-        return LingXiVMUtil.cellsToString(cells);
+        LingXiVmRule vmRule = LingXiVmUtil.parseRule(rule);
+        run(cells, vmRule);
+
+        return LingXiVmUtil.cellsToString(cells);
     }
 
     /**
      * 图灵机运行
      *
      * @param cells
-     * @param map
+     * @param rule
      */
-    private static void run(String[] cells, Map<String, String> map) {
+    private static void run(String[] cells, LingXiVmRule rule) {
 
         //内部状态
         String status = "1";// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-101：超过最小边界，-102：超过最大边界
@@ -46,15 +43,12 @@ public class LingXiVM {
         System.out.println("LingXiVM begin run:");
         while (true) {
             String value = cells[index];
-            String next = map.get(status + "," + value);
-            String[] nextParts = next.split(",", -1);
 
-            String newStatus = nextParts[0];
+            LingXiVmRuleItemTo to = rule.getRuleTo(new LingXiVmRuleItemFrom(status, value));
 
-            status = newStatus;
-            String outputValue = nextParts[1];
+            status = to.getStatus();
 
-            cells[index] = outputValue;
+            cells[index] = to.getCellValue();
 
             //虚拟机内部状态
             if ("0".equals(status)) {
@@ -66,11 +60,10 @@ public class LingXiVM {
                 break;
             }
 
-            String forwardOrBackward = nextParts[2];
             //移动方向：向前、向后、不动
-            if ("+".equalsIgnoreCase(forwardOrBackward)) {//向前，否则向后
+            if ("+".equalsIgnoreCase(to.getForward())) {//向前，否则向后
                 index++;
-            } else if ("-".equalsIgnoreCase(forwardOrBackward)) {
+            } else if ("-".equalsIgnoreCase(to.getForward())) {
                 index--;
             }
 

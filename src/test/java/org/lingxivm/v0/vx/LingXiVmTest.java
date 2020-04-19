@@ -3,7 +3,7 @@ package org.lingxivm.v0.vx;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LingXiVMTest {
+public class LingXiVmTest {
 
     @Test
     public void run() {
@@ -17,7 +17,7 @@ public class LingXiVMTest {
 
         printRule(rule);
         printTape(tape);
-        String result = LingXiVM.run(tape, rule);
+        String result = LingXiVm.run(tape, rule);
         printTape(result);
 
         Assert.assertEquals(result, excepted);
@@ -36,7 +36,7 @@ public class LingXiVMTest {
         for (int i = 0; i < rule.length; i++) {
             printRule(rule[i]);
             printTape(tape);
-            String result = LingXiVM.run(tape, rule[i]);
+            String result = LingXiVm.run(tape, rule[i]);
             printTape(result);
 
             Assert.assertEquals(result, excepted[i]);
