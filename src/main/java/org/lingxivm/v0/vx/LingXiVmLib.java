@@ -6,6 +6,33 @@ package org.lingxivm.v0.vx;
 public class LingXiVmLib {
 
     /**
+     * 初始化定长带子
+     *
+     * @param length
+     * @return
+     */
+    public static String initTape(int length) {
+        return initTape(length, "0");
+    }
+
+    /**
+     * 初始化定长带子
+     *
+     * @param length
+     * @return
+     */
+    public static String initTape(int length, String initValue) {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            if (i != 0) {
+                buf.append(",");
+            }
+            buf.append(initValue);
+        }
+        return buf.toString();
+    }
+
+    /**
      * 获取重置的规则
      *
      * @param value

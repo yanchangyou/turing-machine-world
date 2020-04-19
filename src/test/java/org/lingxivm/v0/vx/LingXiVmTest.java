@@ -66,6 +66,27 @@ public class LingXiVmTest {
     }
 
     @Test
+    public void runIndexMore() {
+
+        // 带子
+        String tape = LingXiVmLib.initTape(4);
+        String excepted = LingXiVmLib.initTape(4, "1");
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < tape.split("\\s*,\\s*").length; i++) {
+            //规则
+            String rule = LingXiVmLib.getResetRule(i, "1");
+            buf.append(rule + "\r\n");
+        }
+        printRule(buf.toString());
+        printTape(tape);
+        String result = LingXiVm.run(tape, buf.toString());
+        printTape(result);
+
+        Assert.assertEquals(result, excepted);
+
+    }
+
+    @Test
     public void runRange() {
 
         // 带子

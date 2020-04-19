@@ -4,6 +4,8 @@ import org.lingxivm.v0.vx.vm.rule.LingXiVmRule;
 import org.lingxivm.v0.vx.vm.rule.LingXiVmRuleItemFrom;
 import org.lingxivm.v0.vx.vm.rule.LingXiVmRuleItemTo;
 
+import java.util.List;
+
 /**
  * 灵犀图灵机
  */
@@ -17,11 +19,13 @@ public class LingXiVm {
      * @param rule oldStatus,oldValue->newStatus,newValue,forward\r\n next
      */
     public static String run(String tape, String rule) {
-
+        System.out.println("LingXiVM begin run:");
         String[] cells = tape.split(",", -1);
 
-        LingXiVmRule vmRule = LingXiVmUtil.parseRule(rule);
-        run(cells, vmRule);
+        List<LingXiVmRule> vmRules = LingXiVmUtil.parseRule(rule);
+        for (LingXiVmRule vmRule : vmRules) {
+            run(cells, vmRule);
+        }
 
         return LingXiVmUtil.cellsToString(cells);
     }
@@ -39,7 +43,6 @@ public class LingXiVm {
 
         int index = rule.getTapeBeginIndex() == null ? 0 : rule.getTapeBeginIndex();
 
-        System.out.println("LingXiVM begin run:");
         while (true) {
 
             String value = cells[index];
