@@ -8,15 +8,15 @@ import java.util.Objects;
 public class LingXiVmRuleItemFrom {
 
     public LingXiVmRuleItemFrom(String status, String cellValue) {
-        this.status = status;
-        this.cellValue = cellValue;
+        setStatus(status);
+        setCellValue(cellValue);
     }
 
     //虚拟机状态
-    String status;
+    private String status;
 
     //带子当前单元格的值
-    String cellValue;
+    private String cellValue;
 
     public String getStatus() {
         return status;
@@ -41,8 +41,8 @@ public class LingXiVmRuleItemFrom {
         if (!(o instanceof LingXiVmRuleItemFrom))
             return false;
         LingXiVmRuleItemFrom that = (LingXiVmRuleItemFrom) o;
-        return Objects.equals(status, that.status) &&
-                Objects.equals(cellValue, that.cellValue);
+        return Objects.equals(getStatus(), that.getStatus()) &&
+                Objects.equals(getCellValue(), that.getCellValue());
     }
 
     @Override

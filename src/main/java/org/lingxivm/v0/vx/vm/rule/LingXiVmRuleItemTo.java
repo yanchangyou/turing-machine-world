@@ -6,9 +6,9 @@ package org.lingxivm.v0.vx.vm.rule;
 public class LingXiVmRuleItemTo {
 
     public LingXiVmRuleItemTo(String status, String cellValue, String forward) {
-        this.status = status;
-        this.cellValue = cellValue;
-        this.forward = forward;
+        setStatus(status);
+        setCellValue(cellValue);
+        setForward(forward);
     }
 
     //虚拟机状态

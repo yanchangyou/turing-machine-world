@@ -14,29 +14,11 @@ import java.util.List;
 public class LingXiVmUtil {
 
     /**
-     * 初始化tape的值
+     * 转换为逗号分割
      *
-     * @param tape
-     * @param initValue
+     * @param cells
+     * @return
      */
-    static void initCells(String[] tape, String initValue) {
-        for (int i = 0; i < tape.length; i++) {
-            tape[i] = initValue;
-        }
-    }
-
-    /**
-     * 初始化tape的值
-     *
-     * @param tape
-     * @param initValue
-     */
-    static void initTape(String[] tape, String initValue) {
-        for (int i = 0; i < tape.length; i++) {
-            tape[i] = initValue;
-        }
-    }
-
     static String cellsToString(String[] cells) {
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < cells.length; i++) {
@@ -65,7 +47,7 @@ public class LingXiVmUtil {
             }
             LingXiVmRule vmRule = new LingXiVmRule();
 
-            String rangeRule = "[" + rules[j];
+            String rangeRule = (rules[j].contains("]") ? "[" : "") + rules[j];
 
             int beginBeginIndex = rangeRule.indexOf('[');
             int endEndIndex = rangeRule.indexOf(']');

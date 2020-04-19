@@ -49,8 +49,8 @@ public class LingXiVmRule {
         LingXiVmRuleItemTo result = null;
         for (LingXiVmRuleItem ruleItem : ruleItems) {
 
-            if (ruleItem.from.equals(from)) {
-                result = ruleItem.to;
+            if (ruleItem.getFrom().equals(from)) {
+                result = ruleItem.getTo();
                 break;
             }
         }
