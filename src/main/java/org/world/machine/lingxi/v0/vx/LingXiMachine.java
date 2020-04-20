@@ -7,7 +7,7 @@ import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItemTo;
 import java.util.List;
 
 /**
- * 灵犀图灵机
+ * 灵犀机
  */
 public class LingXiMachine {
 
@@ -83,5 +83,3 @@ public class LingXiMachine {
         }
     }
 }
-
-
