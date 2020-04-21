@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * 开始方向
  */
-public class LingXiVmRuleItemFrom {
+public class LingXiMachineRuleItemFrom {
 
-    public LingXiVmRuleItemFrom(String status, String cellValue) {
+    public LingXiMachineRuleItemFrom(String status, String cellValue) {
         setStatus(status);
         setCellValue(cellValue);
     }
@@ -38,9 +38,9 @@ public class LingXiVmRuleItemFrom {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (!(o instanceof LingXiVmRuleItemFrom))
+        if (!(o instanceof LingXiMachineRuleItemFrom))
             return false;
-        LingXiVmRuleItemFrom that = (LingXiVmRuleItemFrom) o;
+        LingXiMachineRuleItemFrom that = (LingXiMachineRuleItemFrom) o;
         return Objects.equals(getStatus(), that.getStatus()) &&
                 Objects.equals(getCellValue(), that.getCellValue());
     }

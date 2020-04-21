@@ -3,17 +3,17 @@ package org.world.machine.lingxi.v0.vx.vm.rule;
 /**
  *
  */
-public class LingXiVmRuleItem {
+public class LingXiMachineRuleItem {
 
-    LingXiVmRuleItemFrom from;
+    LingXiMachineRuleItemFrom from;
 
     LingXiVmRuleItemTo to;
 
-    public LingXiVmRuleItemFrom getFrom() {
+    public LingXiMachineRuleItemFrom getFrom() {
         return from;
     }
 
-    public void setFrom(LingXiVmRuleItemFrom from) {
+    public void setFrom(LingXiMachineRuleItemFrom from) {
         this.from = from;
     }
 

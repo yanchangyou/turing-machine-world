@@ -1,7 +1,7 @@
 package org.world.machine.lingxi.v0.vx;
 
-import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRule;
-import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItemFrom;
+import org.world.machine.lingxi.v0.vx.vm.rule.LingXiMachineRule;
+import org.world.machine.lingxi.v0.vx.vm.rule.LingXiMachineRuleItemFrom;
 import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItemTo;
 
 import java.util.List;
@@ -22,8 +22,8 @@ public class LingXiMachine {
         System.out.println("LingXiVM begin run:");
         String[] cells = tape.split(",", -1);
 
-        List<LingXiVmRule> vmRules = LingXiMachineUtil.parseRule(rule);
-        for (LingXiVmRule vmRule : vmRules) {
+        List<LingXiMachineRule> vmRules = LingXiMachineUtil.parseRule(rule);
+        for (LingXiMachineRule vmRule : vmRules) {
             run(cells, vmRule);
         }
 
@@ -36,7 +36,7 @@ public class LingXiMachine {
      * @param cells
      * @param rule
      */
-    private static void run(String[] cells, LingXiVmRule rule) {
+    private static void run(String[] cells, LingXiMachineRule rule) {
 
         //内部状态
         String status = "1";// 状态：0：停止，>0:运行，<0：异常状态；1：运行，-101：超过最小边界，-102：超过最大边界
@@ -47,7 +47,7 @@ public class LingXiMachine {
 
             String value = cells[index];
 
-            LingXiVmRuleItemTo to = rule.getRuleTo(new LingXiVmRuleItemFrom(status, value));
+            LingXiVmRuleItemTo to = rule.getRuleTo(new LingXiMachineRuleItemFrom(status, value));
 
             status = to.getStatus();
 

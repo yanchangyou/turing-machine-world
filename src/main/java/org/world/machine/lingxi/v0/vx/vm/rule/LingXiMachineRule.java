@@ -7,9 +7,9 @@ import java.util.List;
  * [begin,end]1,0->1,1,+;1,1->1,1,+;
  * [begin,end]1,0->1,1,+;1,1->1,1,+;
  */
-public class LingXiVmRule {
+public class LingXiMachineRule {
 
-    public LingXiVmRule() {
+    public LingXiMachineRule() {
         ruleItems = new ArrayList();
     }
 
@@ -22,7 +22,7 @@ public class LingXiVmRule {
     /**
      * 规则项
      */
-    List<LingXiVmRuleItem> ruleItems;
+    List<LingXiMachineRuleItem> ruleItems;
 
     public Integer getTapeBeginIndex() {
         return tapeBeginIndex;
@@ -40,14 +40,14 @@ public class LingXiVmRule {
         this.tapeEndIndex = tapeEndIndex;
     }
 
-    public void addRuleItem(LingXiVmRuleItem ruleItem) {
+    public void addRuleItem(LingXiMachineRuleItem ruleItem) {
         this.ruleItems.add(ruleItem);
     }
 
-    public LingXiVmRuleItemTo getRuleTo(LingXiVmRuleItemFrom from) {
+    public LingXiVmRuleItemTo getRuleTo(LingXiMachineRuleItemFrom from) {
 
         LingXiVmRuleItemTo result = null;
-        for (LingXiVmRuleItem ruleItem : ruleItems) {
+        for (LingXiMachineRuleItem ruleItem : ruleItems) {
 
             if (ruleItem.getFrom().equals(from)) {
                 result = ruleItem.getTo();

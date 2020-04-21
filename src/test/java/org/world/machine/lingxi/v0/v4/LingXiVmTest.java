@@ -2,8 +2,6 @@ package org.world.machine.lingxi.v0.v4;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.world.machine.lingxi.v0.vx.LingXiMachine;
-import org.world.machine.lingxi.v0.vx.LingXiMachineLib;
 
 public class LingXiVmTest {
 
@@ -13,13 +11,13 @@ public class LingXiVmTest {
         // 带子
         String tape = "0,0,0,0";
         //规则
-        String rule = LingXiMachineLib.getResetRule("1");
+        String rule = LingXiVmLib.getResetRule("1");
 
         String excepted = "1,1,1,1";
 
         printRule(rule);
         printTape(tape);
-        String result = LingXiMachine.run(tape, rule);
+        String result = LingXiVm.run(tape, rule);
         printTape(result);
 
         Assert.assertEquals(result, excepted);
@@ -31,15 +29,15 @@ public class LingXiVmTest {
         // 带子
         String tape = "0,0,0,0";
         //规则
-        String[] rule = { LingXiMachineLib.getResetRule("1"),
-                LingXiMachineLib.getResetRule("0") };
+        String[] rule = { LingXiVmLib.getResetRule("1"),
+                LingXiVmLib.getResetRule("0") };
 
         String[] excepted = { "1,1,1,1", "0,0,0,0" };
 
         for (int i = 0; i < rule.length; i++) {
             printRule(rule[i]);
             printTape(tape);
-            String result = LingXiMachine.run(tape, rule[i]);
+            String result = LingXiVm.run(tape, rule[i]);
             printTape(result);
 
             Assert.assertEquals(result, excepted[i]);
@@ -56,11 +54,11 @@ public class LingXiVmTest {
         String[] excepted = { "1,0,0,0", "0,1,0,0", "0,0,1,0", "0,0,0,1" };
         for (int i = 0; i < excepted.length; i++) {
             //规则
-            String rule = LingXiMachineLib.getResetRule(i, "1");
+            String rule = LingXiVmLib.getResetRule(i, "1");
 
             printRule(rule);
             printTape(tape);
-            String result = LingXiMachine.run(tape, rule);
+            String result = LingXiVm.run(tape, rule);
             printTape(result);
 
             Assert.assertEquals(result, excepted[i]);
@@ -72,17 +70,17 @@ public class LingXiVmTest {
     public void runIndexMore() {
 
         // 带子
-        String tape = LingXiMachineLib.initTape(4);
-        String excepted = LingXiMachineLib.initTape(4, "1");
+        String tape = LingXiVmLib.initTape(4);
+        String excepted = LingXiVmLib.initTape(4, "1");
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < tape.split("\\s*,\\s*").length; i++) {
             //规则
-            String rule = LingXiMachineLib.getResetRule(i, "1");
+            String rule = LingXiVmLib.getResetRule(i, "1");
             buf.append(rule + "\r\n");
         }
         printRule(buf.toString());
         printTape(tape);
-        String result = LingXiMachine.run(tape, buf.toString());
+        String result = LingXiVm.run(tape, buf.toString());
         printTape(result);
 
         Assert.assertEquals(result, excepted);
@@ -101,7 +99,7 @@ public class LingXiVmTest {
 
             printRule(rule);
             printTape(tape);
-            String result = LingXiMachine.run(tape, rule);
+            String result = LingXiVm.run(tape, rule);
             printTape(result);
 
             Assert.assertEquals(result, excepted[i]);

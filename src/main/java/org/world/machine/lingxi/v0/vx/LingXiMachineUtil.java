@@ -1,8 +1,8 @@
 package org.world.machine.lingxi.v0.vx;
 
-import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRule;
-import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItem;
-import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItemFrom;
+import org.world.machine.lingxi.v0.vx.vm.rule.LingXiMachineRule;
+import org.world.machine.lingxi.v0.vx.vm.rule.LingXiMachineRuleItem;
+import org.world.machine.lingxi.v0.vx.vm.rule.LingXiMachineRuleItemFrom;
 import org.world.machine.lingxi.v0.vx.vm.rule.LingXiVmRuleItemTo;
 
 import java.util.ArrayList;
@@ -36,16 +36,16 @@ public class LingXiMachineUtil {
      * @param rule
      * @return
      */
-    public static List<LingXiVmRule> parseRule(String rule) {
+    public static List<LingXiMachineRule> parseRule(String rule) {
 
-        List<LingXiVmRule> vmRules = new ArrayList();
+        List<LingXiMachineRule> vmRules = new ArrayList();
 
         String[] rules = rule.trim().split("\\[");
         for (int j = 0; j < rules.length; j++) {
             if ("".equals(rules[j])) {
                 continue;
             }
-            LingXiVmRule vmRule = new LingXiVmRule();
+            LingXiMachineRule vmRule = new LingXiMachineRule();
 
             String rangeRule = (rules[j].contains("]") ? "[" : "") + rules[j];
 
@@ -66,8 +66,8 @@ public class LingXiMachineUtil {
 
             for (int i = 0; i < ruleItems.length; i++) {
                 String[] ruleItem = ruleItems[i].trim().split("\\s*(,|(->))\\s*", -1);
-                LingXiVmRuleItem vmRuleItem = new LingXiVmRuleItem();
-                vmRuleItem.setFrom(new LingXiVmRuleItemFrom(ruleItem[0], ruleItem[1]));
+                LingXiMachineRuleItem vmRuleItem = new LingXiMachineRuleItem();
+                vmRuleItem.setFrom(new LingXiMachineRuleItemFrom(ruleItem[0], ruleItem[1]));
                 vmRuleItem.setTo(new LingXiVmRuleItemTo(ruleItem[2], ruleItem[3], ruleItem[4]));
                 vmRule.addRuleItem(vmRuleItem);
             }
