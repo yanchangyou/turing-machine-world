@@ -9,19 +9,19 @@ public class IdealSystemTest {
     @Test
     public void testRun() {
 
-        IdealWorld innerWorld = new IdealWorldOf0D("0");
-        IdealWorld outerWorld = new IdealWorldOf1D(10, "0");
-        String ruleCode = "";
-        IdealSystemRule systemRule = new IdealSystemRule(ruleCode);
-        IdealSystem idealSystem = new IdealSystem(innerWorld, outerWorld, systemRule);
-
-        System.out.println(innerWorld);
-        System.out.println(outerWorld);
-
-        idealSystem.run();
-
-        System.out.println(innerWorld);
-        System.out.println(outerWorld);
+//        IdealWorld innerWorld = new IdealWorldOf0D("0");
+//        IdealWorld outerWorld = new IdealWorldOf1D(10, "0");
+//        String ruleCode = "";
+//        IdealSystemRule systemRule = new IdealSystemRule(ruleCode);
+//        IdealSystem idealSystem = new IdealSystem(innerWorld, outerWorld, systemRule);
+//
+//        System.out.println(innerWorld);
+//        System.out.println(outerWorld);
+//
+//        idealSystem.run();
+//
+//        System.out.println(innerWorld);
+//        System.out.println(outerWorld);
 
     }
 }
