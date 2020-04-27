@@ -36,7 +36,7 @@ public class NumberUtil {
         return BIT_16_4;
     }
 
-    private static int[][] get2DBits(int bitLength) {
+    public static int[][] get2DBits(int bitLength) {
         int[][] allBits = new int[(int) Math.pow(2, bitLength)][bitLength];
         for (int i = 0; i < allBits.length; i++) {
             int[] bits = new int[allBits[i].length];
