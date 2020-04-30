@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class BrainFuckPlusPlusMachine {
 
+    /**
+     * 先编译，然后执行
+     *
+     * @param code
+     */
     public static void execute(String code) {
 
         String brainFuckCode = compile(code);
@@ -19,12 +24,24 @@ public class BrainFuckPlusPlusMachine {
 
     }
 
+    /**
+     * 编译： 解析token，翻译token
+     *
+     * @param code
+     * @return
+     */
     private static String compile(String code) {
         String[] tokens = parseToken(code);
-        return dealToken(tokens);
+        return convertToken(tokens);
     }
 
-    private static String dealToken(String[] tokens) {
+    /**
+     * 转换token，成fuckbrain语法
+     *
+     * @param tokens
+     * @return
+     */
+    private static String convertToken(String[] tokens) {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < tokens.length; i++) {
@@ -42,6 +59,12 @@ public class BrainFuckPlusPlusMachine {
         return builder.toString();
     }
 
+    /**
+     * 解析token
+     *
+     * @param code
+     * @return
+     */
     private static String[] parseToken(String code) {
 
         List<String> tokens = new ArrayList<String>();

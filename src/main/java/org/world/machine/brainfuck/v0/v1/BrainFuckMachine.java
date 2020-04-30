@@ -1,9 +1,19 @@
 package org.world.machine.brainfuck.v0.v1;
 
+import java.io.IOException;
+
+/**
+ * fuck brain 简单实现
+ */
 public class BrainFuckMachine {
 
-    static char[] cells = new char[100];
+    static char[] cells = new char[3000];
 
+    /**
+     * brain fuck执行
+     *
+     * @param code
+     */
     public static void execute(String code) {
 
         char[] instructions = code.toCharArray();
@@ -15,8 +25,20 @@ public class BrainFuckMachine {
                 cells[index]--;
             } else if ('.' == instructions[i]) {
                 System.out.print(cells[index]);
-            } else  if (',' == instructions[i]) {
-
+            } else if ('>' == instructions[i]) {
+                index++;
+            } else if ('<' == instructions[i]) {
+                index--;
+            } else if (',' == instructions[i]) {
+                try {
+                    char ch = (char) System.in.read();
+                    cells[index] = ch;
+                } catch (IOException e) {
+                    throw new RuntimeException("read exception:", e);
+                }
+            }
+            if (index < 0 || index >= cells.length) {
+                throw new RuntimeException("out of index :" + index);
             }
         }
     }
