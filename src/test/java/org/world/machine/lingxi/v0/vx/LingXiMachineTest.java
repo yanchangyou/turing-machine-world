@@ -3,6 +3,12 @@ package org.world.machine.lingxi.v0.vx;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+/**
+ * 借鉴brain fuck语言，并做简单改进，使语义更简明，
+ * 1，带子是char
+ * 2，指令字符：+，-，<，>，i,o,[,]
+ * 2.1
+ */
 public class LingXiMachineTest {
 
     @Test
