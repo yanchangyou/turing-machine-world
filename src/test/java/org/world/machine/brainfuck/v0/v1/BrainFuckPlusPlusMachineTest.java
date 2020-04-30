@@ -10,6 +10,7 @@ public class BrainFuckPlusPlusMachineTest {
 
         String code = "+65W";
 
+        System.out.println("BrainFuck++ code:" + code);
         String result = BrainFuckPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "A");
@@ -21,6 +22,7 @@ public class BrainFuckPlusPlusMachineTest {
 
         String code = "+65W>+66W>+67W";
 
+        System.out.println("BrainFuck++ code:" + code);
         String result = BrainFuckPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "ABC");
@@ -31,6 +33,8 @@ public class BrainFuckPlusPlusMachineTest {
     public void test2() {
 
         String code = convertToBrainFuckPlusPlusCode("hello,world!");
+
+        System.out.println("BrainFuck++ code:" + code);
 
         String result = BrainFuckPlusPlusMachine.execute(code);
 

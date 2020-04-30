@@ -21,6 +21,7 @@ public class BrainFuckPlusPlusMachine {
 
         String brainFuckCode = compile(code);
 
+        System.out.println("BrainFuck code:" + brainFuckCode);
         return BrainFuckMachine.execute(brainFuckCode);
 
     }
