@@ -43,7 +43,7 @@ public class BrainFuckPlusPlusMachineTest {
     }
 
     /**
-     * 把普通字符串转化为 bf++的输出代码
+     * 把普通字符串转化为 BrainFuck++的输出代码
      *
      * @param text
      * @return
