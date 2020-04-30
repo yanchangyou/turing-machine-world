@@ -7,14 +7,14 @@ import java.io.IOException;
  */
 public class BrainFuckMachine {
 
-    static char[] cells = new char[3000];
-
     /**
      * brain fuck执行
      *
      * @param code
      */
-    public static void execute(String code) {
+    public static String execute(String code) {
+
+        char[] cells = new char[1024];
 
         char[] instructions = code.toCharArray();
         int index = 0;
@@ -41,5 +41,19 @@ public class BrainFuckMachine {
                 throw new RuntimeException("out of index :" + index);
             }
         }
+
+        return convertToString(cells);
     }
+
+    static String convertToString(char[] cells) {
+        int endIndex = 0;
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] == 0) {
+                endIndex = i;
+                break;
+            }
+        }
+        return new String(cells, 0, endIndex);
+    }
+
 }

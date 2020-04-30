@@ -15,12 +15,13 @@ public class BrainFuckPlusPlusMachine {
      * 先编译，然后执行
      *
      * @param code
+     * @return
      */
-    public static void execute(String code) {
+    public static String execute(String code) {
 
         String brainFuckCode = compile(code);
 
-        BrainFuckMachine.execute(brainFuckCode);
+        return BrainFuckMachine.execute(brainFuckCode);
 
     }
 
