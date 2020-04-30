@@ -23,19 +23,6 @@ public class NumberUtil {
         System.out.println();
     }
 
-    private static int[][] getBit_16_4() {
-        int[][] BIT_16_4 = new int[16][4];
-        for (int i = 0; i < 16; i++) {
-            int[] bits = new int[BIT_16_4[i].length];
-            for (int j = 0; j < bits.length; j++) {
-                bits[j] = (i >> (bits.length - j - 1)) & 1;
-            }
-            BIT_16_4[i] = bits;
-            System.out.println(Arrays.toString(bits));
-        }
-        return BIT_16_4;
-    }
-
     public static int[][] get2DBits(int bitLength) {
         int[][] allBits = new int[(int) Math.pow(2, bitLength)][bitLength];
         for (int i = 0; i < allBits.length; i++) {
