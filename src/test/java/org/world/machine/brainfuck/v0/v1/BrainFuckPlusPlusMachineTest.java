@@ -42,6 +42,26 @@ public class BrainFuckPlusPlusMachineTest {
 
     }
 
+    @Test
+    public void testA_Z() {
+
+        StringBuilder code = new StringBuilder("");
+
+        for (int i = 'A'; i <= 'Z'; i++) {
+            code.append("+").append(i);
+            code.append(">");
+        }
+
+        System.out.println("code:" + code);
+        String result = BrainFuckPlusPlusMachine.execute(code.toString());
+
+        System.out.println();
+
+        System.out.println("result:" + result);
+        Assert.assertEquals(result, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    }
+
     /**
      * 把普通字符串转化为 BrainFuck++的输出代码
      *
