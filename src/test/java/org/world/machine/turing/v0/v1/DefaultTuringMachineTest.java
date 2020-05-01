@@ -10,7 +10,7 @@ public class DefaultTuringMachineTest {
         String[] tapeCells = new String[10];
         DefaultTuringMachine turingMachine = new DefaultTuringMachine(tapeCells);
         String programCode = "";
-        turingMachine.execute(programCode);
+//        turingMachine.execute(programCode);
 
 
     }

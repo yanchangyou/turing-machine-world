@@ -1,4 +1,4 @@
-package org.world.machine.brainfuck.v0.v1;
+package org.world.machine.bf.v0.v1;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -7,14 +7,14 @@ import org.testng.annotations.Test;
  * 实现 brain fuck 语言
  * 语法：+、-、<、>、[]、.、,
  */
-public class BrainFuckMachineTest {
+public class BFMachineTest {
 
     @Test
     public void test() {
 
         String code = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.";
 
-        String result = BrainFuckMachine.execute(code);
+        String result = BFMachine.execute(code);
 
         System.out.println();
 
@@ -39,7 +39,7 @@ public class BrainFuckMachineTest {
         }
 
         System.out.println("code:" + code);
-        String result = BrainFuckMachine.execute(code.toString());
+        String result = BFMachine.execute(code.toString());
 
         System.out.println();
 
@@ -59,7 +59,7 @@ public class BrainFuckMachineTest {
         }
 
         System.out.println("code:" + code);
-        String result = BrainFuckMachine.execute(code.toString());
+        String result = BFMachine.execute(code.toString());
 
         System.out.println();
 
@@ -70,7 +70,7 @@ public class BrainFuckMachineTest {
 
         char[] cells = new char[10];
 
-        BrainFuckMachine.execute(code.toString(), cells);
+        BFMachine.execute(code.toString(), cells);
 
         Assert.assertEquals(cells[0], 2);
         Assert.assertEquals(cells[1], 2);
@@ -95,7 +95,7 @@ public class BrainFuckMachineTest {
         }
 
         System.out.println("code:" + code);
-        String result = BrainFuckMachine.execute(code.toString());
+        String result = BFMachine.execute(code.toString());
 
         System.out.println();
 

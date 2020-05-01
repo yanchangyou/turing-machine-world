@@ -1,15 +1,17 @@
-package org.world.machine.brainfuck.v0.v1;
+package org.world.machine.bfpp.v0.v1;
+
+import org.world.machine.bf.v0.v1.BFMachine;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * brain fuck的扩展
+ * BF++: BF的扩展
  * 1，指令替换： W替换.， R替换读
  * 2，语法扩展：指令后面带数字，表示重复多少次，减少输入
  * 比如：输出A， +65W
  */
-public class BrainFuckPlusPlusMachine {
+public class BFPlusPlusMachine {
 
     /**
      * 先编译，然后执行
@@ -22,7 +24,7 @@ public class BrainFuckPlusPlusMachine {
         String brainFuckCode = compile(code);
 
         System.out.println("BrainFuck code:" + brainFuckCode);
-        return BrainFuckMachine.execute(brainFuckCode);
+        return BFMachine.execute(brainFuckCode);
 
     }
 

@@ -1,11 +1,11 @@
-package org.world.machine.brainfuck.v0.v1;
+package org.world.machine.bf.v0.v1;
 
 import java.io.IOException;
 
 /**
- * fuck brain 简单实现
+ * brain f**k 简单实现
  */
-public class BrainFuckMachine {
+public class BFMachine {
 
     public static void execute(String code, char[] cells) {
 

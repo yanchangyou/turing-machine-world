@@ -1,9 +1,9 @@
-package org.world.machine.brainfuck.v0.v1;
+package org.world.machine.bfpp.v0.v1;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class BrainFuckPlusPlusMachineTest {
+public class BFPlusPlusMachineTest {
 
     @Test
     public void test() {
@@ -11,7 +11,7 @@ public class BrainFuckPlusPlusMachineTest {
         String code = "+65W";
 
         System.out.println("BrainFuck++ code:" + code);
-        String result = BrainFuckPlusPlusMachine.execute(code);
+        String result = BFPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "A");
 
@@ -23,7 +23,7 @@ public class BrainFuckPlusPlusMachineTest {
         String code = "+65W>+66W>+67W";
 
         System.out.println("BrainFuck++ code:" + code);
-        String result = BrainFuckPlusPlusMachine.execute(code);
+        String result = BFPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "ABC");
 
@@ -36,7 +36,7 @@ public class BrainFuckPlusPlusMachineTest {
 
         System.out.println("BrainFuck++ code:" + code);
 
-        String result = BrainFuckPlusPlusMachine.execute(code);
+        String result = BFPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "hello,world!");
 
@@ -53,7 +53,7 @@ public class BrainFuckPlusPlusMachineTest {
         }
 
         System.out.println("code:" + code);
-        String result = BrainFuckPlusPlusMachine.execute(code.toString());
+        String result = BFPlusPlusMachine.execute(code.toString());
 
         System.out.println();
 
