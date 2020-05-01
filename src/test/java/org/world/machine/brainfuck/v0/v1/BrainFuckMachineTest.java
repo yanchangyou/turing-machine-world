@@ -48,4 +48,69 @@ public class BrainFuckMachineTest {
 
     }
 
+    @Test
+    public void testSet_B_equal_A() {
+
+        int a = 2;
+
+        StringBuilder code = new StringBuilder("");
+        for (int i = 0; i < a; i++) {
+            code.append("+");
+        }
+
+        System.out.println("code:" + code);
+        String result = BrainFuckMachine.execute(code.toString());
+
+        System.out.println();
+
+        System.out.println("result:" + result);
+        Assert.assertEquals(result, "\u0002");
+
+        code.append("[->+>+<<]>>[-<<+>>]");
+
+        char[] cells = new char[10];
+
+        BrainFuckMachine.execute(code.toString(), cells);
+
+        Assert.assertEquals(cells[0], 2);
+        Assert.assertEquals(cells[1], 2);
+        Assert.assertEquals(cells[2], 0);
+        Assert.assertEquals(cells[3], 0);
+
+    }
+
+    @Test
+    public void testA_ADD_B() {
+
+        int a = 1;
+        int b = 2;
+
+        StringBuilder code = new StringBuilder("");
+        for (int i = 0; i < a; i++) {
+            code.append("+");
+        }
+        code.append(">");
+        for (int i = 0; i < b; i++) {
+            code.append("+");
+        }
+
+        System.out.println("code:" + code);
+        String result = BrainFuckMachine.execute(code.toString());
+
+        System.out.println();
+
+        System.out.println("result:" + result);
+        Assert.assertEquals(result, "\u0001\u0002");
+
+        code.append(">");
+        for (int i = 0; i < a; i++) {
+            code.append("+");
+        }
+        code.append(">");
+        for (int i = 0; i < b; i++) {
+            code.append("+");
+        }
+
+    }
+
 }

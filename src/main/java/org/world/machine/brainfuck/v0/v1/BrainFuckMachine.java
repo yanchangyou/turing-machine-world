@@ -7,14 +7,7 @@ import java.io.IOException;
  */
 public class BrainFuckMachine {
 
-    /**
-     * brain fuck执行
-     *
-     * @param code
-     */
-    public static String execute(String code) {
-
-        char[] cells = new char[1024];
+    public static void execute(String code, char[] cells) {
 
         char[] instructions = code.toCharArray();
         int index = 0;
@@ -29,6 +22,16 @@ public class BrainFuckMachine {
                 index++;
             } else if ('<' == instructions[i]) {
                 index--;
+            } else if ('[' == instructions[i]) {
+                if (cells[index] == 0) {
+                    while (instructions[++i] != ']') {
+                    }
+                }
+            } else if (']' == instructions[i]) {
+                if (cells[index] != 0) {
+                    while (instructions[--i] != '[') {
+                    }
+                }
             } else if (',' == instructions[i]) {
                 try {
                     char ch = (char) System.in.read();
@@ -41,6 +44,19 @@ public class BrainFuckMachine {
                 throw new RuntimeException("out of index :" + index);
             }
         }
+
+    }
+
+    /**
+     * brain fuck执行
+     *
+     * @param code
+     */
+    public static String execute(String code) {
+
+        char[] cells = new char[1024];
+
+        execute(code, cells);
 
         return convertToString(cells);
     }
