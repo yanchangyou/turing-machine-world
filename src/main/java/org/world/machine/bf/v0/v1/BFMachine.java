@@ -31,6 +31,7 @@ public class BFMachine {
                 if (cells[index] != 0) {
                     while (instructions[--i] != '[') {
                     }
+                    i--;
                 }
             } else if (',' == instructions[i]) {
                 try {

@@ -80,6 +80,32 @@ public class BFMachineTest {
     }
 
     @Test
+    public void testSet_B_equal_A_temp_zero() {
+
+        int a = 2;
+
+        StringBuilder code = new StringBuilder("");
+        code.append(">");
+        for (int i = 0; i < a; i++) {
+            code.append("+");
+        }
+        char[] cells = new char[10];
+
+        code.append("[->+<<+>]<[->+<]");
+
+        System.out.println("code:" + code);
+
+        BFMachine.execute(code.toString(), cells);
+
+        Assert.assertEquals(cells[0], 0);
+        Assert.assertEquals(cells[1], 2);
+        Assert.assertEquals(cells[2], 2);
+        Assert.assertEquals(cells[3], 0);
+        Assert.assertEquals(cells[4], 0);
+
+    }
+
+    @Test
     public void testA_ADD_B() {
 
         int a = 1;
