@@ -48,7 +48,7 @@ public class BFMachine {
     }
 
     /**
-     * brain fuck执行
+     * bf执行
      *
      * @param code
      */

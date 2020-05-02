@@ -40,7 +40,7 @@ public class BFPlusPlusMachine {
     }
 
     /**
-     * 转换token，成fuckbrain语法
+     * 转换token，成bf语法
      *
      * @param tokens
      * @return

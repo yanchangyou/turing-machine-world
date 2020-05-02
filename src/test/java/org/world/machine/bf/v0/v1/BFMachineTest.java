@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * 实现 brain fuck 语言
+ * 实现 bf 语言
  * 语法：+、-、<、>、[]、.、,
  */
 public class BFMachineTest {
