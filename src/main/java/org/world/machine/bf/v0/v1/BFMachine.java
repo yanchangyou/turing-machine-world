@@ -1,6 +1,5 @@
 package org.world.machine.bf.v0.v1;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -50,7 +49,7 @@ public class BFMachine {
         int index = 0;
         for (int i = 0; i < instructions.length; i++) {
             stepCount++;
-            System.out.print("cells[" + formatNumber(index, cells.length) + "]"
+            System.out.print("steps[" + stepCount + "]cells[" + formatNumber(index, cells.length) + "]"
                     + instructions[i] + " : ");
 
             if ('+' == instructions[i]) {
@@ -104,7 +103,6 @@ public class BFMachine {
                 throw new RuntimeException("out of index :" + index);
             }
         }
-        System.out.println("steps count:" + stepCount);
     }
 
     static String convertToString(int[] cells) {

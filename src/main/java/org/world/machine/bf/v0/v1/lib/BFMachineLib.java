@@ -208,4 +208,43 @@ public class BFMachineLib {
         code.append("]");
         moveLeft(code, maxCellLength - 1);
     }
+
+    /**
+     * 两个数除
+     *
+     * @param code
+     * @param numberIndex1
+     * @param numberIndex2
+     * @param resultIndex
+     * @param maxCellLength
+     */
+    public static void div(StringBuilder code, int numberIndex1, int numberIndex2, int resultIndex, int maxCellLength) {
+
+        copy(code, numberIndex1, maxCellLength - 1);
+
+        moveRight(code, maxCellLength - 1);
+        code.append("[");
+        moveLeft(code, maxCellLength - 1);
+
+        copy(code, numberIndex2, maxCellLength - 2);
+
+        moveRight(code, maxCellLength - 2);
+        code.append("[");
+        moveLeft(code, maxCellLength - 2);
+
+        doubleSubOne(code, maxCellLength - 2, maxCellLength - 1);
+
+        moveRight(code, maxCellLength - 2);
+        code.append("]");
+        moveLeft(code, maxCellLength - 2);
+
+        moveRight(code, resultIndex);
+        code.append("+");
+        moveLeft(code, resultIndex);
+
+        moveRight(code, maxCellLength - 1);
+        code.append("]");
+        moveLeft(code, maxCellLength - 1);
+
+    }
 }
