@@ -2,21 +2,26 @@ package org.world.machine.bf.v0.v1;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.world.machine.bf.v0.v1.lib.BFMachineLib;
+
+import java.util.Arrays;
 
 /**
  * 实现 bf 语言
  * 语法：+、-、<、>、[]、.、,
  */
-public class BFMachineTest {
+public class BFMachineUseLibTest {
 
     @Test
     public void test() {
 
-        String code = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.";
+        StringBuilder code = new StringBuilder("");
 
-        String result = BFMachine.execute(code);
+        BFMachineLib.set(code, 0, 65);
 
-        System.out.println();
+        System.out.println("code:" + code);
+
+        String result = BFMachine.execute(code.toString());
 
         System.out.println("result:" + result);
         Assert.assertEquals(result, "A");
@@ -26,16 +31,13 @@ public class BFMachineTest {
     @Test
     public void testA_Z() {
 
-        String A = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
-
         StringBuilder code = new StringBuilder("");
 
         for (int i = 0; i <= 'Z' - 'A'; i++) {
-            code.append(A);
-            for (int j = 0; j < i; j++) {
-                code.append("+");
-            }
-            code.append(".>");
+
+            BFMachineLib.set(code, i, i + 65);
+            BFMachineLib.output(code, i);
+
         }
 
         System.out.println("code:" + code);
@@ -52,30 +54,20 @@ public class BFMachineTest {
     public void testSet_B_equal_A() {
 
         int a = 2;
+        //        int b = 0;
+        int[] excepted = new int[] { 0, 2, 2, 0 };
 
         StringBuilder code = new StringBuilder("");
-        for (int i = 0; i < a; i++) {
-            code.append("+");
-        }
+        BFMachineLib.set(code, 1, a);
 
+        BFMachineLib.copy(code, 1, 2);
         System.out.println("code:" + code);
-        String result = BFMachine.execute(code.toString());
+        int[] cells = BFMachine.execute(code.toString(), excepted.length);
 
-        System.out.println();
+        System.out.println(Arrays.toString(excepted));
+        System.out.println(Arrays.toString(cells));
 
-        System.out.println("result:" + result);
-        Assert.assertEquals(result, "\u0002");
-
-        code.append("[->+>+<<]>>[-<<+>>]");
-
-        int[] cells = new int[10];
-
-        BFMachine.execute(code.toString(), cells);
-
-        Assert.assertEquals(cells[0], 2);
-        Assert.assertEquals(cells[1], 2);
-        Assert.assertEquals(cells[2], 0);
-        Assert.assertEquals(cells[3], 0);
+        Assert.assertEquals(cells, excepted);
 
     }
 
@@ -110,34 +102,32 @@ public class BFMachineTest {
 
         int a = 1;
         int b = 2;
+        int c = 0;
+
+        int aIndex = 1;
+        int bIndex = 2;
+        int cIndex = 3;
 
         StringBuilder code = new StringBuilder("");
-        code.append(">");
-        for (int i = 0; i < a; i++) {
-            code.append("+");
-        }
-        code.append(">");
-        for (int i = 0; i < b; i++) {
-            code.append("+");
-        }
+
+        BFMachineLib.set(code, aIndex, a);
+        BFMachineLib.set(code, bIndex, b);
+
+        int maxCellLength = 6;
+
+        BFMachineLib.add(code, aIndex, bIndex, cIndex, maxCellLength);
 
         System.out.println("code:" + code);
-
-//        code.append("<->");
-
-
-        int[] cells = BFMachine.execute(code.toString(), 16);
+        int[] cells = BFMachine.execute(code.toString(), 6);
 
         System.out.println();
 
-        int[] excepted = new int[] { 0, 1, 2, 0 };
+        int[] excepted = new int[] { 0, 1, 2, 3, 0, 0 };
 
-        for (int i = 0; i < excepted.length; i++) {
-            Assert.assertEquals(cells[i], excepted[i], "index:" + i);
-        }
+        Assert.assertEquals(cells, excepted);
 
-
-
+        c = cells[cIndex];
+        Assert.assertEquals(c, 3);
     }
 
 }

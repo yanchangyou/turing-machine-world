@@ -1,11 +1,14 @@
 package org.world.machine.bf.v0.v1;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * brain f**k 简单实现
  */
 public class BFMachine {
+
+    private static final int DEFAULT_CELLS_LENGTH = 32;
 
     /**
      * 指定长度执行
@@ -14,9 +17,9 @@ public class BFMachine {
      * @param cellsLength
      * @return
      */
-    public static char[] execute(String code, int cellsLength) {
+    public static int[] execute(String code, int cellsLength) {
 
-        char[] cells = new char[cellsLength];
+        int[] cells = new int[cellsLength];
         execute(code, cells);
         return cells;
     }
@@ -27,17 +30,20 @@ public class BFMachine {
      * @param code
      * @param cells
      */
-    public static void execute(String code, char[] cells) {
+    public static void execute(String code, int[] cells) {
 
         char[] instructions = code.toCharArray();
         int index = 0;
         for (int i = 0; i < instructions.length; i++) {
+            System.out.print("cells[" + formatNumber(index, cells.length) + "]"
+                    //+ "CODE[" + formatNumber(i, instructions.length) + "]"
+                    + instructions[i] + " : ");
             if ('+' == instructions[i]) {
                 cells[index]++;
             } else if ('-' == instructions[i]) {
                 cells[index]--;
             } else if ('.' == instructions[i]) {
-                System.out.print(cells[index]);
+                System.out.print((char) cells[index]);
             } else if ('>' == instructions[i]) {
                 index++;
             } else if ('<' == instructions[i]) {
@@ -55,15 +61,19 @@ public class BFMachine {
                 }
             } else if (',' == instructions[i]) {
                 try {
-                    char ch = (char) System.in.read();
+                    int ch = (int) System.in.read();
                     cells[index] = ch;
                 } catch (IOException e) {
                     throw new RuntimeException("read exception:", e);
                 }
             }
+
+            System.out.println(Arrays.toString(cells));
+
             if (index < 0 || index >= cells.length) {
                 throw new RuntimeException("out of index :" + index);
             }
+
         }
 
     }
@@ -75,14 +85,14 @@ public class BFMachine {
      */
     public static String execute(String code) {
 
-        char[] cells = new char[1024];
+        int[] cells = new int[DEFAULT_CELLS_LENGTH];
 
         execute(code, cells);
 
         return convertToString(cells);
     }
 
-    static String convertToString(char[] cells) {
+    static String convertToString(int[] cells) {
         int endIndex = 0;
         for (int i = 0; i < cells.length; i++) {
             if (cells[i] == 0) {
@@ -91,6 +101,24 @@ public class BFMachine {
             }
         }
         return new String(cells, 0, endIndex);
+    }
+
+    /**
+     * 数字格式，按照最大值进行格式
+     *
+     * @param number
+     * @param maxValue
+     * @return
+     */
+    private static String formatNumber(int number, int maxValue) {
+        int maxLength = String.valueOf(maxValue).length();
+        int currentLength = String.valueOf(number).length();
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < maxLength - currentLength; i++) {
+            result.append("0");
+        }
+        return result.append(number).toString();
     }
 
 }
