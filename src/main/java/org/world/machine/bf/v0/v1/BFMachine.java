@@ -45,13 +45,14 @@ public class BFMachine {
      * @param cells
      */
     public static void execute(String code, int[] cells) {
-
+        int stepCount = 0;
         char[] instructions = code.toCharArray();
         int index = 0;
         for (int i = 0; i < instructions.length; i++) {
+            stepCount++;
             System.out.print("cells[" + formatNumber(index, cells.length) + "]"
-                    //+ "CODE[" + formatNumber(i, instructions.length) + "]"
                     + instructions[i] + " : ");
+
             if ('+' == instructions[i]) {
                 cells[index]++;
             } else if ('-' == instructions[i]) {
@@ -63,21 +64,36 @@ public class BFMachine {
             } else if ('<' == instructions[i]) {
                 index--;
             } else if ('[' == instructions[i]) {
+
                 if (cells[index] == 0) {
-                    while (instructions[++i] != ']') {
+                    int level = 0;
+
+                    while (instructions[++i] != ']' || level != 0) {
+                        if (instructions[i] == '[') {
+                            level++;
+                        } else if (instructions[i] == ']') {
+                            level--;
+                        }
                     }
                 }
             } else if (']' == instructions[i]) {
                 if (cells[index] != 0) {
-                    while (instructions[--i] != '[') {
+                    int level = 0;
+                    while (instructions[--i] != '[' || level != 0) {
+                        if (instructions[i] == ']') {
+                            level++;
+                        } else if (instructions[i] == '[') {
+                            level--;
+                        }
                     }
                     i--;
                 }
             } else if (',' == instructions[i]) {
                 try {
+                    System.out.print("input:");
                     int ch = (int) System.in.read();
                     cells[index] = ch;
-                } catch (IOException e) {
+                } catch (Exception e) {
                     throw new RuntimeException("read exception:", e);
                 }
             }
@@ -88,6 +104,7 @@ public class BFMachine {
                 throw new RuntimeException("out of index :" + index);
             }
         }
+        System.out.println("steps count:" + stepCount);
     }
 
     static String convertToString(int[] cells) {

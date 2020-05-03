@@ -3,6 +3,8 @@ package org.world.machine.bf.v0.v1;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayInputStream;
+
 /**
  * 实现 bf 语言
  * 语法：+、-、<、>、[]、.、,
@@ -123,9 +125,6 @@ public class BFMachineTest {
 
         System.out.println("code:" + code);
 
-//        code.append("<->");
-
-
         int[] cells = BFMachine.execute(code.toString(), 16);
 
         System.out.println();
@@ -136,7 +135,52 @@ public class BFMachineTest {
             Assert.assertEquals(cells[i], excepted[i], "index:" + i);
         }
 
+    }
 
+    @Test
+    public void testRead() {
+
+        ByteArrayInputStream bio = new ByteArrayInputStream("A".getBytes());
+        System.setIn(bio);
+        StringBuilder code = new StringBuilder();
+        code.append(",");
+        System.out.println(code);
+        int[] cells = BFMachine.execute(code.toString(), 1);
+        Assert.assertEquals(cells[0], 'A');
+
+    }
+
+    @Test(expectedExceptions = Exception.class)
+    public void testReadException() {
+
+        ByteArrayInputStream bio = null;
+        System.setIn(bio);
+        StringBuilder code = new StringBuilder();
+        code.append(",");
+        System.out.println(code);
+        BFMachine.execute(code.toString(), 1);
+
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void testOutOffBoundException() {
+
+        StringBuilder code = new StringBuilder();
+        code.append(">>");
+        System.out.println(code);
+        BFMachine.execute(code.toString(), 1);
+
+    }
+
+    @Test
+    public void testFirstBoundIsZero() {
+
+        StringBuilder code = new StringBuilder();
+        code.append("[++[++]]>++");
+        System.out.println(code);
+        int[] cells = BFMachine.execute(code.toString(), 2);
+        Assert.assertEquals(cells[0], 0);
+        Assert.assertEquals(cells[1], 2);
 
     }
 

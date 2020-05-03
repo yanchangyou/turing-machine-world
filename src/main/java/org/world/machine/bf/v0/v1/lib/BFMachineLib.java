@@ -155,36 +155,57 @@ public class BFMachineLib {
     }
 
     /**
-     * 实现两个位置相加
+     * 实现两个位置相加 : result = number1 + number2
      *
      * @param code
-     * @param fromIndex1
-     * @param fromIndex2
-     * @param toIndex
+     * @param numberIndex1
+     * @param numberIndex2
+     * @param resultIndex
      */
-    public static void add(StringBuilder code, int fromIndex1, int fromIndex2, int toIndex, int maxCellLength) {
+    public static void add(StringBuilder code, int numberIndex1, int numberIndex2, int resultIndex, int maxCellLength) {
 
-        copy(code, fromIndex1, maxCellLength - 1);
-        copy(code, fromIndex2, maxCellLength - 2);
+        copy(code, numberIndex1, maxCellLength - 1);
+        copy(code, numberIndex2, maxCellLength - 2);
 
-        swap(code, maxCellLength - 1, toIndex);
-        swap(code, maxCellLength - 2, toIndex);
+        swap(code, maxCellLength - 1, resultIndex);
+        swap(code, maxCellLength - 2, resultIndex);
     }
 
     /**
-     * 实现两个位置相减
+     * 实现两个位置相减 : result = number1 - number2
      *
      * @param code
-     * @param fromIndex1
-     * @param fromIndex2
-     * @param toIndex
+     * @param numberIndex1
+     * @param numberIndex2
+     * @param resultIndex
      */
-    public static void sub(StringBuilder code, int fromIndex1, int fromIndex2, int toIndex, int maxCellLength) {
+    public static void sub(StringBuilder code, int numberIndex1, int numberIndex2, int resultIndex, int maxCellLength) {
 
-        copy(code, fromIndex1, toIndex);
-        copy(code, fromIndex2, maxCellLength - 1);
+        copy(code, numberIndex1, resultIndex);
+        copy(code, numberIndex2, maxCellLength - 1);
 
-        doubleSubOne(code, maxCellLength - 1, toIndex);
+        doubleSubOne(code, maxCellLength - 1, resultIndex);
 
+    }
+
+    /**
+     * 两个数相乘
+     *
+     * @param code
+     * @param numberIndex1
+     * @param numberIndex2
+     * @param resultIndex
+     * @param maxCellLength
+     */
+    public static void mul(StringBuilder code, int numberIndex1, int numberIndex2, int resultIndex, int maxCellLength) {
+
+        copy(code, numberIndex1, maxCellLength - 1);
+        moveRight(code, maxCellLength - 1);
+        code.append("[-");
+        moveLeft(code, maxCellLength - 1);
+        copy(code, numberIndex2, resultIndex);
+        moveRight(code, maxCellLength - 1);
+        code.append("]");
+        moveLeft(code, maxCellLength - 1);
     }
 }
