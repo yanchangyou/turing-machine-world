@@ -232,8 +232,6 @@ public class BFMachineLib {
         code.append("[");
         code.append("->-");
 
-        code.append("!");
-
         code.append("<");
         code.append("]");
         moveLeft(code, maxCellLength - 2);

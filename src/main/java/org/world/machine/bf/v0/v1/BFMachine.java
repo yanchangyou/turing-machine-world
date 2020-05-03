@@ -87,11 +87,6 @@ public class BFMachine {
                     }
                     i--;
                 }
-            } else if ('!' == instructions[i]) {
-                if (cells[index] == 0) {
-                    System.out.println(Arrays.toString(cells));
-                    break;
-                }
             } else if (',' == instructions[i]) {
                 try {
                     System.out.print("input:");
@@ -107,7 +102,20 @@ public class BFMachine {
             if (index < 0 || index >= cells.length) {
                 throw new RuntimeException("out of index :" + index);
             }
+            if (!isAllGreaterZero(cells)) {
+                throw new RuntimeException("out of value -1, must be >0");
+            }
         }
+    }
+
+    static boolean isAllGreaterZero(int[] cells) {
+
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static String convertToString(int[] cells) {

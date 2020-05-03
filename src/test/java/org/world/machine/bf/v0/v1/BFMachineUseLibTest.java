@@ -133,8 +133,8 @@ public class BFMachineUseLibTest {
     @Test
     public void testA_SUB_B() {
 
-        int a = 1;
-        int b = 2;
+        int a = 2;
+        int b = 1;
         int c = 0;
 
         int aIndex = 1;
@@ -155,12 +155,12 @@ public class BFMachineUseLibTest {
 
         System.out.println();
 
-        int[] excepted = new int[] { 0, 1, 2, -1, 0, 0 };
+        int[] excepted = new int[] { 0, 2, 1, 1, 0, 0 };
 
         Assert.assertEquals(cells, excepted);
 
         c = cells[cIndex];
-        Assert.assertEquals(c, -1);
+        Assert.assertEquals(c, 1);
     }
 
     @Test
@@ -196,7 +196,7 @@ public class BFMachineUseLibTest {
         Assert.assertEquals(c, 6);
     }
 
-    @Test
+    @Test(expectedExceptions = RuntimeException.class)
     public void testA_DIV_B_7_2() {
 
         int a = 7;
