@@ -7,27 +7,10 @@ package org.world.machine.bf.v0.v1.lib;
 public class BFMachineLib {
 
     /**
-     * 移动位置
+     * 移动相对位置
      *
      * @param code
-     * @param index
-     * @param isLeft
-     */
-    public static void moveTo(StringBuilder code, int index, boolean isLeft) {
-
-        char direction = isLeft ? '<' : '>';
-        //移动到指定位置
-        for (int i = 0; i < index; i++) {
-            code.append(direction);
-        }
-
-    }
-
-    /**
-     * 移动位置
-     *
-     * @param code
-     * @param shift
+     * @param shift 偏移量
      */
     public static void move(StringBuilder code, int shift) {
 
@@ -37,25 +20,26 @@ public class BFMachineLib {
         for (int i = 0; i < length; i++) {
             code.append(direction);
         }
-
     }
 
     /**
-     * 向左移动位置
+     * 向右移动length位
      *
-     * @param index
+     * @param code
+     * @param length
      */
-    public static void moveLeft(StringBuilder code, int index) {
-        moveTo(code, index, true);
+    public static void moveRight(StringBuilder code, int length) {
+        move(code, length);
     }
 
     /**
-     * 向右移动位置
+     * 向左移动length位
      *
-     * @param index
+     * @param code
+     * @param length
      */
-    public static void moveRight(StringBuilder code, int index) {
-        moveTo(code, index, false);
+    public static void moveLeft(StringBuilder code, int length) {
+        move(code, -length);
     }
 
     /**
@@ -135,7 +119,6 @@ public class BFMachineLib {
         if (fromIndex == toIndex1) {
             return;
         }
-
         moveRight(code, fromIndex);
         code.append("[-");
         move(code, toIndex1 - fromIndex);
@@ -148,6 +131,7 @@ public class BFMachineLib {
         move(code, fromIndex - toIndex2);
         code.append("]");
         moveLeft(code, fromIndex);
+
     }
 
     /**
