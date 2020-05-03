@@ -118,5 +118,4 @@ public class BFMachine {
         }
         return result.append(number).toString();
     }
-
 }
