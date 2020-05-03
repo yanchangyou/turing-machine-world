@@ -87,6 +87,11 @@ public class BFMachine {
                     }
                     i--;
                 }
+            } else if ('!' == instructions[i]) {
+                if (cells[index] == 0) {
+                    System.out.println(Arrays.toString(cells));
+                    break;
+                }
             } else if (',' == instructions[i]) {
                 try {
                     System.out.print("input:");

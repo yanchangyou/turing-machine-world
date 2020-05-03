@@ -197,6 +197,40 @@ public class BFMachineUseLibTest {
     }
 
     @Test
+    public void testA_DIV_B_7_2() {
+
+        int a = 7;
+        int b = 2;
+        int c;
+
+        int aIndex = 1;
+        int bIndex = 2;
+        int cIndex = 3;
+
+        StringBuilder code = new StringBuilder("");
+
+        BFMachineLib.set(code, aIndex, a);
+        BFMachineLib.set(code, bIndex, b);
+
+        int maxCellLength = 6;
+
+        BFMachineLib.div(code, aIndex, bIndex, cIndex, maxCellLength);
+
+        System.out.println("code:" + code);
+        int[] cells = BFMachine.execute(code.toString(), 6);
+
+        System.out.println();
+
+        int[] excepted = new int[] { 0, 7, 2, 3, 1, 0 };
+
+        Assert.assertEquals(cells, excepted);
+
+        c = cells[cIndex];
+        Assert.assertEquals(c, 3);
+        Assert.assertEquals(cells[4], 1);
+    }
+
+    @Test
     public void testA_DIV_B() {
 
         int a = 6;

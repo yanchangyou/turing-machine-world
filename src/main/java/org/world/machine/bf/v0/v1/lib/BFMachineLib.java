@@ -96,13 +96,13 @@ public class BFMachineLib {
     }
 
     /**
-     * 两个单元格同时-1，当第一个减到0时终止
+     * 两个单元格同时逐步-1，当第一个减到0时终止
      *
      * @param code
      * @param index1
      * @param index2
      */
-    public static void doubleSubOne(StringBuilder code, int index1, int index2) {
+    public static void doubleSub(StringBuilder code, int index1, int index2) {
         if (index1 == index2) {
             return;
         }
@@ -184,7 +184,7 @@ public class BFMachineLib {
         copy(code, numberIndex1, resultIndex);
         copy(code, numberIndex2, maxCellLength - 1);
 
-        doubleSubOne(code, maxCellLength - 1, resultIndex);
+        doubleSub(code, maxCellLength - 1, resultIndex);
 
     }
 
@@ -230,11 +230,11 @@ public class BFMachineLib {
 
         moveRight(code, maxCellLength - 2);
         code.append("[");
-        moveLeft(code, maxCellLength - 2);
+        code.append("->-");
 
-        doubleSubOne(code, maxCellLength - 2, maxCellLength - 1);
+        code.append("!");
 
-        moveRight(code, maxCellLength - 2);
+        code.append("<");
         code.append("]");
         moveLeft(code, maxCellLength - 2);
 
