@@ -11,6 +11,20 @@ public class BFMachine {
     private static final int DEFAULT_CELLS_LENGTH = 32;
 
     /**
+     * bf执行
+     *
+     * @param code
+     */
+    public static String execute(String code) {
+
+        int[] cells = new int[DEFAULT_CELLS_LENGTH];
+
+        execute(code, cells);
+
+        return convertToString(cells);
+    }
+
+    /**
      * 指定长度执行
      *
      * @param code
@@ -73,23 +87,7 @@ public class BFMachine {
             if (index < 0 || index >= cells.length) {
                 throw new RuntimeException("out of index :" + index);
             }
-
         }
-
-    }
-
-    /**
-     * bf执行
-     *
-     * @param code
-     */
-    public static String execute(String code) {
-
-        int[] cells = new int[DEFAULT_CELLS_LENGTH];
-
-        execute(code, cells);
-
-        return convertToString(cells);
     }
 
     static String convertToString(int[] cells) {
