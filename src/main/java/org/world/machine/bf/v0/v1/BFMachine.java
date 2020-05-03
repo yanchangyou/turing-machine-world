@@ -7,6 +7,26 @@ import java.io.IOException;
  */
 public class BFMachine {
 
+    /**
+     * 指定长度执行
+     *
+     * @param code
+     * @param cellsLength
+     * @return
+     */
+    public static char[] execute(String code, int cellsLength) {
+
+        char[] cells = new char[cellsLength];
+        execute(code, cells);
+        return cells;
+    }
+
+    /**
+     * 指定cells执行
+     *
+     * @param code
+     * @param cells
+     */
     public static void execute(String code, char[] cells) {
 
         char[] instructions = code.toCharArray();
