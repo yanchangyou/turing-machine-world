@@ -71,4 +71,26 @@ public class BFMachineLibTest {
         System.out.println(code);
         Assert.assertEquals(code.toString(), ">[->+<<+>]<[->+<]");
     }
+
+    @Test
+    public void testDoubleSubOne() {
+        StringBuilder code = new StringBuilder();
+        int index1 = 1;
+        int index2 = 2;
+        BFMachineLib.doubleSubOne(code, index1, index2);
+
+        System.out.println(code);
+        Assert.assertEquals(code.toString(), ">[->-<]<");
+    }
+
+    @Test
+    public void testDoubleSubOneSameIndex() {
+        StringBuilder code = new StringBuilder();
+        int index1 = 1;
+        int index2 = 1;
+        BFMachineLib.doubleSubOne(code, index1, index2);
+
+        System.out.println(code);
+        Assert.assertEquals(code.toString(), "");
+    }
 }

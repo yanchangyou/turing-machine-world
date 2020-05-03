@@ -130,4 +130,37 @@ public class BFMachineUseLibTest {
         Assert.assertEquals(c, 3);
     }
 
+    @Test
+    public void testA_SUB_B() {
+
+        int a = 1;
+        int b = 2;
+        int c = 0;
+
+        int aIndex = 1;
+        int bIndex = 2;
+        int cIndex = 3;
+
+        StringBuilder code = new StringBuilder("");
+
+        BFMachineLib.set(code, aIndex, a);
+        BFMachineLib.set(code, bIndex, b);
+
+        int maxCellLength = 6;
+
+        BFMachineLib.sub(code, aIndex, bIndex, cIndex, maxCellLength);
+
+        System.out.println("code:" + code);
+        int[] cells = BFMachine.execute(code.toString(), 6);
+
+        System.out.println();
+
+        int[] excepted = new int[] { 0, 1, 2, -1, 0, 0 };
+
+        Assert.assertEquals(cells, excepted);
+
+        c = cells[cIndex];
+        Assert.assertEquals(c, -1);
+    }
+
 }

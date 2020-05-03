@@ -96,6 +96,26 @@ public class BFMachineLib {
     }
 
     /**
+     * 两个单元格同时-1，当第一个减到0时终止
+     *
+     * @param code
+     * @param index1
+     * @param index2
+     */
+    public static void doubleSubOne(StringBuilder code, int index1, int index2) {
+        if (index1 == index2) {
+            return;
+        }
+        moveRight(code, index1);
+        code.append("[-");
+        move(code, index2 - index1);
+        code.append("-");
+        move(code, index1 - index2);
+        code.append("]");
+        moveLeft(code, index1);
+    }
+
+    /**
      * 交换两个位置的值
      *
      * @param code
@@ -149,5 +169,22 @@ public class BFMachineLib {
 
         swap(code, maxCellLength - 1, toIndex);
         swap(code, maxCellLength - 2, toIndex);
+    }
+
+    /**
+     * 实现两个位置相减
+     *
+     * @param code
+     * @param fromIndex1
+     * @param fromIndex2
+     * @param toIndex
+     */
+    public static void sub(StringBuilder code, int fromIndex1, int fromIndex2, int toIndex, int maxCellLength) {
+
+        copy(code, fromIndex1, toIndex);
+        copy(code, fromIndex2, maxCellLength - 1);
+
+        doubleSubOne(code, maxCellLength - 1, toIndex);
+
     }
 }
