@@ -5,6 +5,39 @@ package org.world.machine.bf.v0.v2.lib;
  */
 public class BFMachineMathLib {
 
+    public static enum OperateType {
+        ADD, SUB, MUL, DIV;
+    }
+
+    /**
+     * 集成计算
+     *
+     * @param code
+     * @param operateType
+     * @param numberIndex1
+     * @param numberIndex2
+     * @param resultIndex
+     * @param maxCellLength
+     */
+    public static void calculate(StringBuilder code, OperateType operateType, int numberIndex1, int numberIndex2,
+            int resultIndex, int maxCellLength) {
+
+        switch (operateType) {
+            case ADD:
+                add(code, numberIndex1, numberIndex2, resultIndex, maxCellLength);
+                break;
+            case SUB:
+                sub(code, numberIndex1, numberIndex2, resultIndex, maxCellLength);
+                break;
+            case MUL:
+                mul(code, numberIndex1, numberIndex2, resultIndex, maxCellLength);
+                break;
+            case DIV:
+                div(code, numberIndex1, numberIndex2, resultIndex, maxCellLength);
+                break;
+        }
+    }
+
     /**
      * 实现两个位置相加 : result = number1 + number2
      *
