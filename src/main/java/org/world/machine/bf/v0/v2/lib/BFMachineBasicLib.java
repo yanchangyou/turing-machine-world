@@ -44,13 +44,21 @@ public class BFMachineBasicLib {
 
     /**
      * 设置正值
+     * TODO: 是否考虑清理
      *
      * @param value
      */
     public static void setValue(StringBuilder code, int value) {
+
+        if (value == 0) {
+            return;
+        }
+
+        final char POSITIVE_CHAR = value > 0 ? '+' : '-';
+        final int TIMES = value > 0 ? value : -value;
         //设置值
-        for (int i = 0; i < value; i++) {
-            code.append("+");
+        for (int i = 0; i < TIMES; i++) {
+            code.append(POSITIVE_CHAR);
         }
     }
 
