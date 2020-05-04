@@ -78,6 +78,12 @@ public class BFMachine {
                 }
             } else if ('^' == instructions[i]) {// 实现if语义
                 i = gotoPreOrNext(instructions, i, true);
+            } else if ('_' == instructions[i]) {// 值设置为0
+                cells[index] = 0;
+            } else if ('!' == instructions[i]) {// 实现if语义
+                if (cells[index] == 0) {
+                    i = gotoPreOrNext(instructions, i, true);
+                }
             } else if ('&' == instructions[i]) { //实现位置重置到0
                 index = 0;
             } else if ('.' == instructions[i]) {
@@ -97,8 +103,8 @@ public class BFMachine {
             if (index < 0 || index >= cells.length) {
                 throw new RuntimeException("out of index :" + index);
             }
-            if (!isAllGreaterZero(cells)) {
-                //                throw new RuntimeException("out of value -1, must be >0");
+            if (!isOkCellsNumber(cells)) {
+//                throw new RuntimeException("out of value -1, must be >0");
             }
         }
     }
@@ -126,10 +132,10 @@ public class BFMachine {
         return index;
     }
 
-    static boolean isAllGreaterZero(int[] cells) {
+    static boolean isOkCellsNumber(int[] cells) {
 
         for (int i = 0; i < cells.length; i++) {
-            if (cells[i] < 0) {
+            if (cells[i] < -10) {
                 return false;
             }
         }

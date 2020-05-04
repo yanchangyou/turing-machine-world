@@ -29,8 +29,7 @@ public class BFMachineLogicLib {
 
     public static void isTrueOrFalse(StringBuilder code, int index, boolean isTrue) {
         //清空首位
-        code.append("&");
-        BFMachineBasicLib.reset(code, 0);
+        code.append("&_");
         BFMachineBasicLib.setValue(code, isTrue ? 0 : -1);
         BFMachineBasicLib.moveRight(code, index);
         code.append("[");
@@ -40,9 +39,4 @@ public class BFMachineLogicLib {
         code.append("]");
         code.append("&");
     }
-
-    public static void and(StringBuilder code, int index1, int index2) {
-
-    }
-
 }

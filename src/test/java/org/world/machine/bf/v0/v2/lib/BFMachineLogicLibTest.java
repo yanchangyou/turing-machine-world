@@ -11,7 +11,7 @@ public class BFMachineLogicLibTest {
         int index = 1;
         BFMachineLogicLib.isTrue(code, index);
         System.out.println(code);
-        Assert.assertEquals(code.toString(), "&[-]>[<+^]&");
+        Assert.assertEquals(code.toString(), "&_>[<+^]&");
     }
 
     @Test
@@ -20,6 +20,6 @@ public class BFMachineLogicLibTest {
         int index = 1;
         BFMachineLogicLib.isFalse(code, index);
         System.out.println(code);
-        Assert.assertEquals(code.toString(), "&[-]->[<+^]&");
+        Assert.assertEquals(code.toString(), "&_->[<+^]&");
     }
 }

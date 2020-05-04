@@ -118,25 +118,29 @@ public class BFMachineMathLib {
 
         BFMachineBasicLib.moveRight(code, maxCellLength - 1);
         code.append("[");
-        BFMachineBasicLib.moveLeft(code, maxCellLength - 1);
-
+        code.append("&_");
         BFMachineBasicLib.copy(code, numberIndex2, maxCellLength - 2);
 
         BFMachineBasicLib.moveRight(code, maxCellLength - 2);
         code.append("[");
         code.append("->-");
 
-        code.append("<");
-        code.append("]");
-        BFMachineBasicLib.moveLeft(code, maxCellLength - 2);
+        code.append("!");
 
+        code.append("<");
+
+        code.append("]");
+
+        BFMachineLogicLib.isFalse(code, maxCellLength - 2);
+
+        code.append("[");
         BFMachineBasicLib.moveRight(code, resultIndex);
-        code.append("+");
-        BFMachineBasicLib.moveLeft(code, resultIndex);
+        code.append("+^]");
+
+        code.append("&_");
 
         BFMachineBasicLib.moveRight(code, maxCellLength - 1);
         code.append("]");
-        BFMachineBasicLib.moveLeft(code, maxCellLength - 1);
-
+        code.append("&_");
     }
 }

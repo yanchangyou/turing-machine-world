@@ -43,7 +43,7 @@ public class BFMachineUseMathLibTest {
 
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
+    @Test
     public void testA_DIV_B_7_2() {
 
         int a = 7;
