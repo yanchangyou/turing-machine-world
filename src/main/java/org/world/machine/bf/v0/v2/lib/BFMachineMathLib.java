@@ -6,7 +6,17 @@ package org.world.machine.bf.v0.v2.lib;
 public class BFMachineMathLib {
 
     public static enum OperateType {
-        ADD, SUB, MUL, DIV;
+        ADD("+"), SUB("-"), MUL("*"), DIV("/");
+
+        String code;
+
+        OperateType(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
     }
 
     /**
