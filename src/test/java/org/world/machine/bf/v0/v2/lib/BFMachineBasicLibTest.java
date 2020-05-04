@@ -40,6 +40,16 @@ public class BFMachineBasicLibTest {
     }
 
     @Test
+    public void testReset() {
+
+        StringBuilder code = new StringBuilder();
+        int index = 1;
+        int length = 2;
+        BFMachineBasicLib.reset(code, index, length);
+        Assert.assertEquals(code.toString(), ">[-]<>>[-]<<");
+    }
+
+    @Test
     public void testOutput() {
         StringBuilder code = new StringBuilder();
         int index = 1;

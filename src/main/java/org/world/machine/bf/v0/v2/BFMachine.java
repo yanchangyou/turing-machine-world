@@ -1,6 +1,7 @@
 package org.world.machine.bf.v0.v2;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * brain f**k 简单实现
@@ -44,6 +45,10 @@ public class BFMachine {
      * @param cells
      */
     public static void execute(String code, int[] cells) {
+
+        code = tuningCode(code);//优化代码
+        System.out.println("code:" + code);
+
         int stepCount = 0;
         char[] instructions = code.toCharArray();
         int index = 0;
@@ -145,5 +150,20 @@ public class BFMachine {
             result.append("0");
         }
         return result.append(number).toString();
+    }
+
+    static String pattern = "(\\<\\>)|(\\>\\<)";
+    static int tuningCount = 0;
+
+    static String tuningCode(String code) {
+
+        tuningCount += Pattern.compile(pattern).matcher(code).groupCount();
+        System.out.println("tuning code count:" + tuningCount);
+
+        if (code.matches(".*(" + pattern + ").*")) {
+            return tuningCode(code.replaceAll(pattern, ""));
+        } else {
+            return code;
+        }
     }
 }
