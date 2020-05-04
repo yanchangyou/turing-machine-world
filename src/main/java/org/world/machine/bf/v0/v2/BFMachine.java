@@ -104,7 +104,7 @@ public class BFMachine {
                 throw new RuntimeException("out of index :" + index);
             }
             if (!isOkCellsNumber(cells)) {
-//                throw new RuntimeException("out of value -1, must be >0");
+                throw new RuntimeException("out of value -1, must be >0");
             }
         }
     }
@@ -135,7 +135,7 @@ public class BFMachine {
     static boolean isOkCellsNumber(int[] cells) {
 
         for (int i = 0; i < cells.length; i++) {
-            if (cells[i] < -10) {
+            if (cells[i] < -10000) {
                 return false;
             }
         }

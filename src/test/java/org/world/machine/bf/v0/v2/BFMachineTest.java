@@ -184,4 +184,13 @@ public class BFMachineTest {
 
     }
 
+    @Test
+    public void testHelloWorld() {
+        StringBuilder code = new StringBuilder();
+        code.append(">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]\n"
+                + "<.>+++++++++++[<++++++++>-]<-.--------.+++.------.--------.[-]>++++++++[<++++>-\n"
+                + "]<+.[-]++++++++++. ");
+       String result= BFMachine.execute(code.toString());
+        System.out.println(result);
+    }
 }
