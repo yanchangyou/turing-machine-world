@@ -9,6 +9,21 @@ import java.util.regex.Pattern;
 public class BFMachine {
 
     private static final int DEFAULT_CELLS_LENGTH = 32;
+    private static boolean logFlag = true;//日志开关
+
+    /**
+     * 禁用日志
+     */
+    public static void disableLog() {
+        logFlag = false;
+    }
+
+    /**
+     * 启用日志
+     */
+    public static void enableLog() {
+        logFlag = false;
+    }
 
     /**
      * bf执行
@@ -46,18 +61,18 @@ public class BFMachine {
      */
     public static void execute(String code, int[] cells) {
 
-        System.out.println("tuning before code:" + code);
+        log("tuning before code:" + code + "\r\n");
         code = tuningCode(code);//优化代码
-        System.out.println("tuning after code:" + code);
+        log("tuning after code:" + code);
 
         int stepCount = 0;
         char[] instructions = code.toCharArray();
         int index = 0;
         for (int i = 0; i < instructions.length; i++) {
             stepCount++;
-            System.out.print("steps[" + formatNumber(stepCount, cells.length) + "]"
+            log("steps[" + formatNumber(stepCount, cells.length) + "]"
                     + "cells[" + formatNumber(index, cells.length) + "]"
-                    + instructions[i] + " : ");
+                    + instructions[i] + " : ", true);
 
             if ('+' == instructions[i]) {//值+1
                 cells[index]++;
@@ -90,14 +105,14 @@ public class BFMachine {
             } else if (',' == instructions[i]) {// 输入一个字符
                 try {
                     System.out.print("input:");
-                    int ch = (int) System.in.read();
+                    int ch = System.in.read();
                     cells[index] = ch;
                 } catch (Exception e) {
                     throw new RuntimeException("read exception:", e);
                 }
             }
 
-            System.out.println(Arrays.toString(cells));
+            log(Arrays.toString(cells));
 
             if (index < 0 || index >= cells.length) {
                 throw new RuntimeException("out of index :" + index);
@@ -182,12 +197,35 @@ public class BFMachine {
     static String tuningCode(String code) {
 
         tuningCount += Pattern.compile(pattern).matcher(code).groupCount();
-        System.out.println("tuning code count:" + tuningCount);
+        log("tuning code count:" + tuningCount);
 
         if (code.matches(".*(" + pattern + ").*")) {
             return tuningCode(code.replaceAll(pattern, ""));
         } else {
             return code;
+        }
+    }
+
+    /**
+     * 日志统一输出
+     *
+     * @param message
+     */
+    static void log(String message) {
+        log(message, false);
+    }
+
+    /**
+     * 日志统一输出
+     *
+     * @param message
+     */
+    static void log(String message, boolean inlineFlag) {
+        if (logFlag) {
+            System.out.print(message);
+            if (!inlineFlag) {
+                System.out.println();
+            }
         }
     }
 }

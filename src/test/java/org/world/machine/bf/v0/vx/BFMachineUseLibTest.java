@@ -15,7 +15,7 @@ public class BFMachineUseLibTest {
     @Test
     public void test() {
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
 
         BFMachineBasicLib.set(code, 0, 65);
 
@@ -31,7 +31,7 @@ public class BFMachineUseLibTest {
     @Test
     public void testA_Z() {
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
 
         for (int i = 0; i <= 'Z' - 'A'; i++) {
 
@@ -54,10 +54,9 @@ public class BFMachineUseLibTest {
     public void testSet_B_equal_A() {
 
         int a = 2;
-        //        int b = 0;
         int[] excepted = new int[] { 0, 2, 2, 0 };
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
         BFMachineBasicLib.set(code, 1, a);
 
         BFMachineBasicLib.copy(code, 1, 2);
@@ -76,7 +75,7 @@ public class BFMachineUseLibTest {
 
         int a = 2;
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
         code.append(">");
         for (int i = 0; i < a; i++) {
             code.append("+");
@@ -96,5 +95,4 @@ public class BFMachineUseLibTest {
         Assert.assertEquals(cells[4], 0);
 
     }
-
 }

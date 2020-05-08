@@ -30,7 +30,7 @@ public class BFMachineTest {
 
         String A = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
 
         for (int i = 0; i <= 'Z' - 'A'; i++) {
             code.append(A);
@@ -55,7 +55,7 @@ public class BFMachineTest {
 
         int a = 2;
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
         for (int i = 0; i < a; i++) {
             code.append("+");
         }
@@ -86,7 +86,7 @@ public class BFMachineTest {
 
         int a = 2;
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
         code.append(">");
         for (int i = 0; i < a; i++) {
             code.append("+");
@@ -113,7 +113,7 @@ public class BFMachineTest {
         int a = 1;
         int b = 2;
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
         code.append(">");
         for (int i = 0; i < a; i++) {
             code.append("+");
@@ -187,10 +187,13 @@ public class BFMachineTest {
     @Test
     public void testHelloWorld() {
         StringBuilder code = new StringBuilder();
+
         code.append(">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]\n"
                 + "<.>+++++++++++[<++++++++>-]<-.--------.+++.------.--------.[-]>++++++++[<++++>-\n"
                 + "]<+.[-]++++++++++. ");
-       String result= BFMachine.execute(code.toString());
+        BFMachine.disableLog();
+        String result = BFMachine.execute(code.toString());
         System.out.println(result);
+        BFMachine.enableLog();
     }
 }
