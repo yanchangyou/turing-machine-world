@@ -1,16 +1,23 @@
 package org.world.machine.bfpp.v0.v1;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.world.machine.bf.v0.vx.BFMachine;
 
 public class BFPlusPlusMachineTest {
+
+    @BeforeTest
+    public void before() {
+        BFMachine.disableLog();
+    }
 
     @Test
     public void test() {
 
         String code = "+65W";
 
-        System.out.println("BrainFuck++ code:" + code);
+        System.out.println("BF++ code:" + code);
         String result = BFPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "A");
@@ -20,9 +27,9 @@ public class BFPlusPlusMachineTest {
     @Test
     public void test1() {
 
-        String code = "+65W>+66W>+67W";
+        String code = "+65>+66>+67";
 
-        System.out.println("BrainFuck++ code:" + code);
+        System.out.println("BF++ code:" + code);
         String result = BFPlusPlusMachine.execute(code);
 
         Assert.assertEquals(result, "ABC");
@@ -30,14 +37,15 @@ public class BFPlusPlusMachineTest {
     }
 
     @Test
-    public void test2() {
+    public void hello() {
 
-        String code = convertToBrainFuckPlusPlusCode("hello,world!");
+        String code = convertToBFPlusPlusCode("hello,world!");
 
-        System.out.println("BrainFuck++ code:" + code);
+        System.out.println("BF++ code:" + code);
 
         String result = BFPlusPlusMachine.execute(code);
 
+        result = BFPlusPlusMachine.execute(code);
         Assert.assertEquals(result, "hello,world!");
 
     }
@@ -45,7 +53,7 @@ public class BFPlusPlusMachineTest {
     @Test
     public void testA_Z() {
 
-        StringBuilder code = new StringBuilder("");
+        StringBuilder code = new StringBuilder();
 
         for (int i = 'A'; i <= 'Z'; i++) {
             code.append("+").append(i);
@@ -63,15 +71,15 @@ public class BFPlusPlusMachineTest {
     }
 
     /**
-     * 把普通字符串转化为 BrainFuck++的输出代码
+     * 把普通字符串转化为 BF++的输出代码
      *
      * @param text
      * @return
      */
-    String convertToBrainFuckPlusPlusCode(String text) {
+    String convertToBFPlusPlusCode(String text) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            builder.append("+").append((short) text.charAt(i)).append("W>");
+            builder.append("+").append((short) text.charAt(i)).append(".>");
         }
         return builder.toString();
     }

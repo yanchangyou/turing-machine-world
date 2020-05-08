@@ -1,13 +1,13 @@
 package org.world.machine.bfpp.v0.v1;
 
-import org.world.machine.bf.v0.v1.BFMachine;
+import org.world.machine.bf.v0.vx.BFMachine;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * BF++: BF的扩展
- * 1，指令替换： W替换.， R替换读
+ * 1，指令替换：&:重置到首位，_单元格置0，^无条件break，!有条件break(条件和[一样)
  * 2，语法扩展：指令后面带数字，表示重复多少次，减少输入
  * 比如：输出A， +65W
  */
@@ -23,7 +23,7 @@ public class BFPlusPlusMachine {
 
         String brainFuckCode = compile(code);
 
-        System.out.println("BrainFuck code:" + brainFuckCode);
+        System.out.println("BF code:" + brainFuckCode);
         return BFMachine.execute(brainFuckCode);
 
     }
@@ -74,20 +74,13 @@ public class BFPlusPlusMachine {
         List<String> tokens = new ArrayList<String>();
         for (int i = 0; i < code.length(); i++) {
             int beginIndex = i, endIndex = i;
-            while (Character.isDigit(code.charAt(endIndex))) {
+            while (endIndex < code.length() && Character.isDigit(code.charAt(endIndex))) {
                 endIndex++;
             }
 
             if (beginIndex == endIndex) {
                 char instruction = code.charAt(i);
-                if ('W' == instruction || 'w' == instruction) {
-                    tokens.add(".");
-                }
-                if ('R' == instruction || 'r' == instruction) {
-                    tokens.add(".");
-                } else {
-                    tokens.add(instruction + "");
-                }
+                tokens.add(instruction + "");
             } else {
                 tokens.add(code.substring(beginIndex, endIndex));
                 i += (endIndex - beginIndex - 1);
