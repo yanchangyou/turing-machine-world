@@ -1,8 +1,8 @@
-package org.world.machine.bf.v0.v2;
+package org.world.machine.bf.v0.vx;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.world.machine.bf.v0.v2.lib.BFMachineBasicLib;
+import org.world.machine.bf.v0.vx.lib.BFMachineBasicLib;
 
 import java.util.Arrays;
 

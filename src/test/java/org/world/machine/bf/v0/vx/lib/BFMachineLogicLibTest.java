@@ -1,8 +1,7 @@
-package org.world.machine.bf.v0.v2.lib;
+package org.world.machine.bf.v0.vx.lib;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.world.machine.bf.v0.vx.lib.BFMachineLogicLib;
 
 public class BFMachineLogicLibTest {
 
