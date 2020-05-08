@@ -44,7 +44,6 @@ public class BFMachineBasicLib {
 
     /**
      * 设置正值
-     * TODO: 是否考虑清理
      *
      * @param value
      */
@@ -70,9 +69,10 @@ public class BFMachineBasicLib {
      */
     public static void set(StringBuilder code, int index, int value) {
 
+        code.append("&");
         moveRight(code, index);
         setValue(code, value);
-        moveLeft(code, index);
+        code.append("&");
 
     }
 
@@ -83,9 +83,10 @@ public class BFMachineBasicLib {
      * @param index
      */
     public static void reset(StringBuilder code, int index) {
+        code.append("&");
         moveRight(code, index);
-        code.append("[-]");
-        moveLeft(code, index);
+        code.append("_");
+        code.append("&");
     }
 
     /**
@@ -95,9 +96,12 @@ public class BFMachineBasicLib {
      * @param index
      */
     public static void reset(StringBuilder code, int index, int length) {
+        code.append("&");
+        moveRight(code, index);
         for (int i = 0; i < length; i++) {
-            reset(code, index + i);
+            code.append("_>");
         }
+        code.append("&");
     }
 
     /**
@@ -107,9 +111,10 @@ public class BFMachineBasicLib {
      */
     public static void output(StringBuilder code, int index) {
 
+        code.append("&");
         moveRight(code, index);
         code.append(".");
-        moveLeft(code, index);
+        code.append("&");
 
     }
 
@@ -138,13 +143,14 @@ public class BFMachineBasicLib {
         if (index1 == index2) {
             return;
         }
+        code.append("&");
         moveRight(code, index1);
         code.append("[-");
         move(code, index2 - index1);
         code.append("-");
         move(code, index1 - index2);
         code.append("]");
-        moveLeft(code, index1);
+        code.append("&");
     }
 
     /**
@@ -171,6 +177,8 @@ public class BFMachineBasicLib {
         if (fromIndex == toIndex1) {
             return;
         }
+
+        code.append("&");
         moveRight(code, fromIndex);
         code.append("[-");
         move(code, toIndex1 - fromIndex);
@@ -182,8 +190,8 @@ public class BFMachineBasicLib {
 
         move(code, fromIndex - toIndex2);
         code.append("]");
-        moveLeft(code, fromIndex);
 
+        code.append("&");
     }
 
 }

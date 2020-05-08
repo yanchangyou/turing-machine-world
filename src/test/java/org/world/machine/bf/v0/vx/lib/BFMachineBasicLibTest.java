@@ -14,7 +14,7 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.swap(code, index1, index2);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), ">[->+<]<");
+        Assert.assertEquals(code.toString(),"&>[->+<]&");
     }
 
     @Test
@@ -26,7 +26,7 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.swap(code, a, b);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), "");
+        Assert.assertEquals(code.toString(),"");
     }
 
     @Test
@@ -36,7 +36,7 @@ public class BFMachineBasicLibTest {
         int value = 2;
         BFMachineBasicLib.set(code, index, value);
 
-        Assert.assertEquals(code.toString(), ">++<");
+        Assert.assertEquals(code.toString(),"&>++&");
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BFMachineBasicLibTest {
         int index = 1;
         int length = 2;
         BFMachineBasicLib.reset(code, index, length);
-        Assert.assertEquals(code.toString(), ">[-]<>>[-]<<");
+        Assert.assertEquals(code.toString(),"&>_>_>&");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class BFMachineBasicLibTest {
         StringBuilder code = new StringBuilder();
         int index = 1;
         BFMachineBasicLib.output(code, index);
-        Assert.assertEquals(code.toString(), ">.<");
+        Assert.assertEquals(code.toString(),"&>.&");
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.swap(code, fromIndex, toIndex1, toIndex2);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), ">[->+>+<<]<");
+        Assert.assertEquals(code.toString(),"&>[->+>+<<]&");
     }
 
     @Test
@@ -79,7 +79,7 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.copy(code, fromIndex, toIndex);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), ">[->+<<+>]<[->+<]");
+        Assert.assertEquals(code.toString(),"&>[->+<<+>]&&[->+<]&");
     }
 
     @Test
@@ -90,7 +90,7 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.doubleSub(code, index1, index2);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), ">[->-<]<");
+        Assert.assertEquals(code.toString(),"&>[->-<]&");
     }
 
     @Test
@@ -101,6 +101,6 @@ public class BFMachineBasicLibTest {
         BFMachineBasicLib.doubleSub(code, index1, index2);
 
         System.out.println(code);
-        Assert.assertEquals(code.toString(), "");
+        Assert.assertEquals(code.toString(),"");
     }
 }

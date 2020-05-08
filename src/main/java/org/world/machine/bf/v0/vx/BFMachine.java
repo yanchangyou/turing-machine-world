@@ -59,36 +59,35 @@ public class BFMachine {
                     + "cells[" + formatNumber(index, cells.length) + "]"
                     + instructions[i] + " : ");
 
-            if ('+' == instructions[i]) {
+            if ('+' == instructions[i]) {//值+1
                 cells[index]++;
-            } else if ('-' == instructions[i]) {
+            } else if ('-' == instructions[i]) {// 值-1
                 cells[index]--;
-            } else if ('>' == instructions[i]) {
+            } else if ('>' == instructions[i]) {// 右移
                 index++;
-            } else if ('<' == instructions[i]) {
+            } else if ('<' == instructions[i]) {// 左移
                 index--;
-            } else if ('[' == instructions[i]) {
-
+            } else if ('[' == instructions[i]) {// while开始
                 if (cells[index] == 0) {
                     i = gotoPreOrNext(instructions, i, true);
                 }
-            } else if (']' == instructions[i]) {
+            } else if (']' == instructions[i]) {// while结束
                 if (cells[index] != 0) {
                     i = gotoPreOrNext(instructions, i, false);
                 }
-            } else if ('^' == instructions[i]) {// 实现if语义
+            } else if ('^' == instructions[i]) {// 无条件break
                 i = gotoPreOrNext(instructions, i, true);
-            } else if ('_' == instructions[i]) {// 值设置为0
-                cells[index] = 0;
-            } else if ('!' == instructions[i]) {// 实现if语义
+            } else if ('!' == instructions[i]) {// 有条件break
                 if (cells[index] == 0) {
                     i = gotoPreOrNext(instructions, i, true);
                 }
-            } else if ('&' == instructions[i]) { //实现位置重置到0
+            } else if ('&' == instructions[i]) { // 位置重置到首位
                 index = 0;
-            } else if ('.' == instructions[i]) {
+            } else if ('_' == instructions[i]) {// 单元格设置为零
+                cells[index] = 0;
+            } else if ('.' == instructions[i]) {// 输出
                 System.out.print((char) cells[index]);
-            } else if (',' == instructions[i]) {
+            } else if (',' == instructions[i]) {// 输入一个字符
                 try {
                     System.out.print("input:");
                     int ch = (int) System.in.read();
