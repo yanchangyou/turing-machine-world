@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>turing-machine-bfplusplus</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.world.machine</groupId>
+            <artifactId>turing-machine-bf</artifactId>
+            <version>0.x-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <parent>
+        <groupId>org.world.machine</groupId>
+        <artifactId>turing-machine-pom</artifactId>
+        <version>0.x-SNAPSHOT</version>
+    </parent>
+
+</project>
