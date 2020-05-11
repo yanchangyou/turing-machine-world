@@ -44,8 +44,6 @@ public class BFPlusPlusMachineTest {
         System.out.println("BF++ code:" + code);
 
         String result = BFPlusPlusMachine.execute(code);
-
-        result = BFPlusPlusMachine.execute(code);
         Assert.assertEquals(result, "hello,world!");
 
     }

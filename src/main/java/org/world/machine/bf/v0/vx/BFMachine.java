@@ -121,6 +121,7 @@ public class BFMachine {
                 throw new RuntimeException("out of value -1, must be >0");
             }
         }
+        System.out.println("\r\nBF-LOG:step count:" + stepCount);
     }
 
     /**
