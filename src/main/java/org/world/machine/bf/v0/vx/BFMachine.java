@@ -196,11 +196,19 @@ public class BFMachine {
      */
     static String tuningCode(String code) {
 
+        return removeDuplicateSet(removeUselessMove(code));
+    }
+
+    static String removeDuplicateSet(String code) {
+        return code.replaceAll("&+", "&");
+    }
+
+    private static String removeUselessMove(String code) {
         tuningCount += Pattern.compile(pattern).matcher(code).groupCount();
         log("tuning code count:" + tuningCount);
 
         if (code.matches(".*(" + pattern + ").*")) {
-            return tuningCode(code.replaceAll(pattern, ""));
+            return removeUselessMove(code.replaceAll(pattern, ""));
         } else {
             return code;
         }
