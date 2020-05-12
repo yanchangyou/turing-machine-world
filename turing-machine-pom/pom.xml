@@ -7,6 +7,7 @@
     <groupId>org.world.machine</groupId>
     <artifactId>turing-machine-pom</artifactId>
     <version>0.x-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,18 +21,12 @@
             <artifactId>testng</artifactId>
             <version>6.11</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.11</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <modules>
-        <module>../turing-machine-default</module>
-        <module>../turing-machine-bf</module>
-        <module>../turing-machine-bfplusplus</module>
-        <module>../turing-machine-lingxi</module>
+<!--        <module>../turing-machine-default</module>-->
+<!--        <module>../turing-machine-bf</module>-->
+<!--        <module>../turing-machine-bfplusplus</module>-->
+<!--        <module>../turing-machine-lingxi</module>-->
     </modules>
 </project>
