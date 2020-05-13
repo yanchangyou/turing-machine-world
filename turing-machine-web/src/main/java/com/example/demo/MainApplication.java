@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.world.machine.bf.v0.vx.BFMachine;
 import org.world.machine.bfpp.v0.v1.BFPlusPlusMachine;
 
 import java.io.ByteArrayInputStream;
@@ -13,6 +14,10 @@ import java.io.ByteArrayOutputStream;
 @SpringBootApplication
 @RestController
 public class MainApplication {
+
+    static {
+        BFMachine.disableLog();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
@@ -29,6 +34,7 @@ public class MainApplication {
         System.out.println("input:" + input);
         ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
         String result = BFPlusPlusMachine.execute(code, inputStream, outputStream);
         System.out.println("result:" + result);
 
