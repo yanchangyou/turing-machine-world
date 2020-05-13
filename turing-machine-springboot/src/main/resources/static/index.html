@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BF++</title>
+    <script src="js/util.js"></script>
+</head>
+<body>
+<style>
+
+    .line {
+        display:block;
+        margin:10px auto;
+        font-size:2rem;
+        text-align:left;
+    }
+
+    div.center {
+        text-align:center;
+     }
+
+
+
+</style>
+
+<div style="text-align:center;">
+    <div class="line center">BF++ code</div>
+    <textarea class="line" id="code" style="width:80%;height:200px;"></textarea>
+    <button class="line" onclick="run()">run</button>
+    <div class="line center">result</div>
+    <pre class="line" id="result"></pre>
+</div>
+<script>
+
+    function run() {
+        var code = document.getElementById("code").value;
+        var formData = 'code='+encodeURIComponent(code);
+        var url = "/execute";
+
+        postForm(url, formData, function(result) {
+
+            document.getElementById("result").innerHTML = result;
+        });
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>

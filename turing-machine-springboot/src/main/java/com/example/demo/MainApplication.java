@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.world.machine.bfpp.v0.v1.BFPlusPlusMachine;
@@ -20,8 +21,11 @@ public class MainApplication {
         return String.format("Hello %s!", name);
     }
 
-    @GetMapping("/execute")
+    @RequestMapping("/execute")
     public String execute(@RequestParam(value = "code") String code) {
-        return BFPlusPlusMachine.execute(code);
+        System.out.println("code:" + code);
+        String result = BFPlusPlusMachine.execute(code);
+        System.out.println("result:" + result);
+        return result;
     }
 }
