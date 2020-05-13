@@ -11,7 +11,7 @@ import java.util.List;
  * BF++: BF的扩展
  * 1，指令替换：&:重置到首位，_单元格置0，^无条件break，!有条件break(条件和[一样)
  * 2，语法扩展：指令后面带数字，表示重复多少次，减少输入
- * 比如：输出A， +65W
+ * 比如：输出A， +65.
  */
 public class BFPlusPlusMachine {
 
