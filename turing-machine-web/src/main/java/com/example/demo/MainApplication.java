@@ -2,11 +2,13 @@ package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.world.machine.bfpp.v0.v1.BFPlusPlusMachine;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 @SpringBootApplication
 @RestController
@@ -16,16 +18,20 @@ public class MainApplication {
         SpringApplication.run(MainApplication.class, args);
     }
 
-    @GetMapping("/hello")
+    @RequestMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         return String.format("Hello %s!", name);
     }
 
     @RequestMapping("/execute")
-    public String execute(@RequestParam(value = "code") String code) {
+    public String execute(@RequestParam("code") String code, @RequestParam("input") String input) {
         System.out.println("code:" + code);
-        String result = BFPlusPlusMachine.execute(code);
+        System.out.println("input:" + input);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        String result = BFPlusPlusMachine.execute(code, inputStream, outputStream);
         System.out.println("result:" + result);
-        return result;
+
+        return outputStream.toString();
     }
 }

@@ -2,6 +2,8 @@ package org.world.machine.bfpp.v0.v1;
 
 import org.world.machine.bf.v0.vx.BFMachine;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,21 @@ public class BFPlusPlusMachine {
      * @return
      */
     public static String execute(String code) {
+        return execute(code, System.in, System.out);
+    }
+
+    /**
+     * 先编译，然后执行
+     *
+     * @param code
+     * @return
+     */
+    public static String execute(String code, InputStream input, OutputStream output) {
 
         String brainFuckCode = compile(code);
 
         System.out.println("BF code:" + brainFuckCode);
-        return BFMachine.execute(brainFuckCode);
+        return BFMachine.execute(brainFuckCode, input, output);
 
     }
 
