@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.world.machine</groupId>
-    <artifactId>turing-machine-springboot</artifactId>
+    <artifactId>turing-machine-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>

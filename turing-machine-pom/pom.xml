@@ -28,6 +28,5 @@
         <module>../turing-machine-bf</module>
         <module>../turing-machine-bfplusplus</module>
         <module>../turing-machine-lingxi</module>
-        <module>../turing-machine-springboot</module>
     </modules>
 </project>
