@@ -1,3 +1,4 @@
+git pull
 cd ../turing-machine-pom
 mvn install -DskipTests
 cd ../turing-machine-web
