@@ -1,5 +1,8 @@
 package org.world.machine.bf.v0.vx;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -26,6 +29,21 @@ public class BFMachine {
     }
 
     /**
+     * 先编译，然后执行
+     *
+     * @param code
+     * @return
+     */
+    public static String execute(String code, InputStream input, OutputStream output) {
+
+        int[] cells = new int[DEFAULT_CELLS_LENGTH];
+
+        execute(code, cells, input, output);
+
+        return convertToString(cells);
+    }
+
+    /**
      * bf执行
      *
      * @param code
@@ -34,7 +52,7 @@ public class BFMachine {
 
         int[] cells = new int[DEFAULT_CELLS_LENGTH];
 
-        execute(code, cells);
+        execute(code, cells, System.in, System.out);
 
         return convertToString(cells);
     }
@@ -60,6 +78,16 @@ public class BFMachine {
      * @param cells
      */
     public static void execute(String code, int[] cells) {
+        execute(code, cells, System.in, System.out);
+    }
+
+    /**
+     * 指定cells执行
+     *
+     * @param code
+     * @param cells
+     */
+    public static void execute(String code, int[] cells, InputStream input, OutputStream output) {
 
         log("tuning before code:" + code + "\r\n");
         code = tuningCode(code);//优化代码
@@ -102,11 +130,18 @@ public class BFMachine {
                 cells[index] = 0;
             } else if ('.' == instructions[i]) {// 输出
                 System.out.print((char) cells[index]);
+                try {
+                    output.write(Character.valueOf((char) cells[index]).toString().getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (',' == instructions[i]) {// 输入一个字符
                 try {
                     System.out.print("input:");
-                    int ch = System.in.read();
-                    cells[index] = ch;
+                    int ch = input.read();
+                    if (ch !=-1) {
+                        cells[index] = ch;
+                    }
                 } catch (Exception e) {
                     throw new RuntimeException("read exception:", e);
                 }
