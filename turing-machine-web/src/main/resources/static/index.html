@@ -21,16 +21,24 @@
 
     .width80 {
         width:80%;
+        margin:auto;
     }
     .font_2rem {
         font-size:2rem;
      }
 
+
+
 </style>
 
 <div style="text-align:center;">
-    <div class="line center">BF++ code</div>
-    <textarea class="line width80" id="code" style="height:400px;">+104.>+101.>+108.>+108.>+111.>+44.>+119.>+111.>+114.>+108.>+100.>+33.>+60.>+98.>+114.>+62.>
+    <div class="line center">X</div>
+    <textarea class="line width80" id="x" readonly rows="2">hello,world!
+Hello World!</textarea>
+<!--    <button class="line" onclick="compileX()">compile to java</button>-->
+<!--    <textarea class="line width80" id="java" readonly rows="1">System.out.println("hello,world!");</textarea>-->
+    <button class="line" onclick="compileJava()">compile to BF++</button>
+    <textarea class="line width80" id="code" style="height:200px;">+104.>+101.>+108.>+108.>+111.>+44.>+119.>+111.>+114.>+108.>+100.>+33.>+60.>+98.>+114.>+62.>
 
 &_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>_>
 
@@ -45,16 +53,16 @@
 </div>
 <div>
 
-    <pre class="font_2rem">
+    <pre class="font_2rem width80">
 
 
 BF++: Brain F**k的扩展
- 1，指令扩展：&:重置到首位，_单元格置0，^无条件break，!有条件break(条件和[一样)
+ 1，指令扩展：&(重置到首位)，_(单元格置0)，^(无条件break)，!(有条件break,条件和[一样)
  2，语法扩展：指令后面带数字，表示重复多少次，减少输入
  比如：输出A， +65.
 
 <a href="http://www.muppetlabs.com/~breadbox/bf/" target="_blank">查看官网</a>
-<a href="https://baike.baidu.com/item/Brainfuck"target="_blank">百度百科</a></pre>
+<a href="https://baike.baidu.com/item/Brainfuck" target="_blank">百度百科</a></pre>
 </div>
 <script>
 
@@ -70,6 +78,8 @@ BF++: Brain F**k的扩展
             document.getElementById("result").innerHTML = result;
         });
     }
+
+
 
 
 
