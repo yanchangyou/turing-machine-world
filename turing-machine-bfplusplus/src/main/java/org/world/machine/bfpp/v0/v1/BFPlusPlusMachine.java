@@ -47,9 +47,24 @@ public class BFPlusPlusMachine {
      * @return
      */
     private static String compile(String code) {
-        List<Object> tokens = parseTokens(code);
+        List<Object> tokens = parseTokens(cleanComment(code));
         List<Object> tokensInTree = parseTokensToTree(tokens);
         return convertTokenToBfCode(tokensInTree);
+    }
+
+    /**
+     * 清除注释
+     *
+     * @param code
+     * @return
+     */
+    static String cleanComment(String code) {
+        String[] lines = code.split("\\\r|\\\n");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            builder.append(lines[i].split("#")[0]);
+        }
+        return builder.toString();
     }
 
     /**

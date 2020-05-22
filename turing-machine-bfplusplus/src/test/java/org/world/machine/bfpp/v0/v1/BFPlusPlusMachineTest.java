@@ -53,12 +53,12 @@ public class BFPlusPlusMachineTest {
     @Test
     public void hello() {
 
-        String code = convertToBFPlusPlusCode("hello,world!");
+        String code = convertToBFPlusPlusCode("Hello World!\r\n");
 
         System.out.println("BF++ code:" + code);
 
         String result = BFPlusPlusMachine.execute(code);
-        Assert.assertEquals(result, "hello,world!");
+        Assert.assertEquals(result, "Hello World!\r\n");
 
     }
 
@@ -123,4 +123,28 @@ public class BFPlusPlusMachineTest {
             Assert.assertEquals(tree.size(), treeSize[i]);
         }
     }
+
+    @Test
+    public void testCleanComment() {
+
+        String code = "#commnet\r";
+        String expected = "";
+        String result = BFPlusPlusMachine.cleanComment(code);
+        System.out.println(result);
+        Assert.assertEquals(result, expected);
+
+    }
+
+    @Test
+    public void testCleanCommentMore() {
+
+        String[] code = new String[] { "#commnet\r", "#commnet\n++", "#commnet\n+\r\n+" , "#commnet\n+\r\n+#comment" };
+        String[] expected = new String[] { "", "++", "++","++" };
+        for (int i = 0; i < code.length; i++) {
+            String result = BFPlusPlusMachine.cleanComment(code[i]);
+            System.out.println(result);
+            Assert.assertEquals(result, expected[i]);
+        }
+    }
+
 }
