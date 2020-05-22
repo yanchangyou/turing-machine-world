@@ -46,7 +46,7 @@ public class BFPlusPlusMachine {
      * @param code
      * @return
      */
-    private static String compile(String code) {
+    static String compile(String code) {
         List<Object> tokens = parseTokens(cleanComment(code));
         List<Object> tokensInTree = parseTokensToTree(tokens);
         return convertTokenToBfCode(tokensInTree);
@@ -193,5 +193,34 @@ public class BFPlusPlusMachine {
         }
 
         return tokens;
+    }
+
+    /**
+     * 反编译
+     *
+     * @param code
+     * @return
+     */
+    public static String decompile(String code) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < code.length(); i++) {
+            builder.append(code.charAt(i));
+            int count = 1;
+            int lastIndex = i + 1;
+            for (int j = lastIndex; j < code.length(); j++) {
+                if (code.charAt(i) == code.charAt(j)) {
+                    count++;
+                } else {
+                    break;
+                }
+                lastIndex = j;
+
+            }
+            if (count > 1) {
+                builder.append(count);
+                i = lastIndex;
+            }
+        }
+        return builder.toString();
     }
 }

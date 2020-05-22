@@ -138,8 +138,8 @@ public class BFPlusPlusMachineTest {
     @Test
     public void testCleanCommentMore() {
 
-        String[] code = new String[] { "#commnet\r", "#commnet\n++", "#commnet\n+\r\n+" , "#commnet\n+\r\n+#comment" };
-        String[] expected = new String[] { "", "++", "++","++" };
+        String[] code = new String[] { "#commnet\r", "#commnet\n++", "#commnet\n+\r\n+", "#commnet\n+\r\n+#comment" };
+        String[] expected = new String[] { "", "++", "++", "++" };
         for (int i = 0; i < code.length; i++) {
             String result = BFPlusPlusMachine.cleanComment(code[i]);
             System.out.println(result);
@@ -147,4 +147,23 @@ public class BFPlusPlusMachineTest {
         }
     }
 
+    @Test
+    public void testDecompile() {
+        String code = "++";
+        String expected = "+2";
+        String result = BFPlusPlusMachine.decompile(code);
+        Assert.assertEquals(result, expected);
+    }
+
+    @Test
+    public void testDecompileHelloWorld() {
+        String code = ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]<.>+++++++++++[<+++++>-]<.>++++++++[<+++>-]<.+++.------.--------.[-]>++++++++[<++++>-]<+.[-]++++++++++.";
+        String expected = ">+9[<+8>-]<.>+7[<+4>-]<+.+7.2+3.[-]>+8[<+4>-]<.>+11[<+5>-]<.>+8[<+3>-]<.+3.-6.-8.[-]>+8[<+4>-]<+.[-]+10.";
+        String result = BFPlusPlusMachine.decompile(code);
+        System.out.println(result);
+        Assert.assertEquals(result, expected);
+        String oldCode = BFPlusPlusMachine.compile(result);
+        System.out.println(oldCode);
+        Assert.assertEquals(oldCode, code);
+    }
 }
