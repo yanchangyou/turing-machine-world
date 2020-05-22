@@ -47,8 +47,9 @@ public class BFPlusPlusMachine {
      * @return
      */
     private static String compile(String code) {
-        String[] tokens = parseToken(code);
-        return convertToken(tokens);
+        List<Object> tokens = parseTokens(code);
+        List<Object> tokensInTree = parseTokensToTree(tokens);
+        return convertTokenToBfCode(tokensInTree);
     }
 
     /**
@@ -57,7 +58,7 @@ public class BFPlusPlusMachine {
      * @param tokens
      * @return
      */
-    private static String convertToken(String[] tokens) {
+    static String convertTokenToBfCode(String[] tokens) {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < tokens.length; i++) {
@@ -76,14 +77,91 @@ public class BFPlusPlusMachine {
     }
 
     /**
+     * 转换token，成bf语法
+     *
+     * @param tokens
+     * @return
+     */
+    static String convertTokenToBfCode(List<Object> tokens) {
+        StringBuilder builder = new StringBuilder();
+
+        String lastCode = null;
+        for (int i = 0; i < tokens.size(); i++) {
+            String currentCode = "";
+            Object token = tokens.get(i);
+            if (token instanceof List) { //嵌套
+                String subCode = convertTokenToBfCode((List) token);
+                currentCode = subCode;
+            } else if (token instanceof Number) { //重复
+                int number = ((Integer) token) - 1;
+                for (int j = 0; j < number; j++) {
+                    builder.append(lastCode);
+                }
+            } else { //普通token
+                currentCode = (String) token;
+            }
+            builder.append(currentCode);
+            lastCode = currentCode;
+        }
+
+        return builder.toString();
+    }
+
+    /**
+     * 解析成语法树
+     *
+     * @param tokens
+     * @return
+     */
+    static List<Object> parseTokensToTree(List<Object> tokens) {
+        List<Object> tokenList = new ArrayList<>();
+        for (int i = 0; i < tokens.size(); i++) {
+            Object token = tokens.get(i);
+            if ("(".equals(token)) {
+                int zero = -1;
+                int endIndex = -1;
+                for (int j = i + 1; j < tokens.size(); j++) {
+                    Object innerToken = tokens.get(j);
+                    if (")".equals(innerToken)) {
+                        zero += 1;
+                    } else if ("(".equals(innerToken)) {
+                        zero += -1;
+                    }
+                    if (zero == 0) {
+                        endIndex = j;
+                        break;
+                    }
+                }
+                if (endIndex == -1) {
+                    throw new RuntimeException("语法错误：缺少右括号");
+                }
+                List subTokens = new ArrayList();
+                for (int j = i + 1; j < endIndex; j++) {
+                    subTokens.add(tokens.get(j));
+                }
+                List subList = parseTokensToTree(subTokens);
+                if (subList.size() > 0) {
+                    tokenList.add(subList);
+                }
+                i = endIndex;
+            } else if (")".equals(token)) {
+                throw new RuntimeException("语法错误：缺少左括号");
+            } else {
+                tokenList.add(token);
+            }
+        }
+        return tokenList;
+    }
+
+    /**
      * 解析token
      *
      * @param code
      * @return
      */
-    private static String[] parseToken(String code) {
+    static List<Object> parseTokens(String code) {
 
-        List<String> tokens = new ArrayList<String>();
+        List<Object> tokens = new ArrayList<>();
         for (int i = 0; i < code.length(); i++) {
             int beginIndex = i, endIndex = i;
             while (endIndex < code.length() && Character.isDigit(code.charAt(endIndex))) {
@@ -94,11 +172,11 @@ public class BFPlusPlusMachine {
                 char instruction = code.charAt(i);
                 tokens.add(instruction + "");
             } else {
-                tokens.add(code.substring(beginIndex, endIndex));
+                tokens.add(Integer.parseInt(code.substring(beginIndex, endIndex)));
                 i += (endIndex - beginIndex - 1);
             }
         }
 
-        return tokens.toArray(new String[0]);
+        return tokens;
     }
 }

@@ -5,6 +5,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.world.machine.bf.v0.vx.BFMachine;
 
+import java.util.List;
+
 public class BFPlusPlusMachineTest {
 
     @BeforeTest
@@ -28,6 +30,18 @@ public class BFPlusPlusMachineTest {
     public void test1() {
 
         String code = "+65>+66>+67";
+
+        System.out.println("BF++ code:" + code);
+        String result = BFPlusPlusMachine.execute(code);
+
+        Assert.assertEquals(result, "ABC");
+
+    }
+
+    @Test
+    public void test2() {
+
+        String code = "(+)65>(+)66>(+)67";
 
         System.out.println("BF++ code:" + code);
         String result = BFPlusPlusMachine.execute(code);
@@ -82,4 +96,31 @@ public class BFPlusPlusMachineTest {
         return builder.toString();
     }
 
+    @Test
+    public void testParseTokensToTree() {
+
+        String code = "(,.)12";
+        List<Object> tokens = BFPlusPlusMachine.parseTokens(code);
+        System.out.println(tokens);
+        Assert.assertEquals(tokens.size(), 5);
+        List<Object> tree = BFPlusPlusMachine.parseTokensToTree(tokens);
+        System.out.println(tree);
+        Assert.assertEquals(tree.size(), 2);
+    }
+
+    @Test
+    public void testParseTokensToTreeMore() {
+
+        String[] code = new String[] { "(,.)12", "+1", "", "+-+-", "(())", "((+))", "((++--))", "(+(+-)-)" };
+        int[] tokenSize = new int[] { 5, 2, 0, 4, 4, 5, 8, 8 };
+        int[] treeSize = new int[] { 2, 2, 0, 4, 0, 1, 1, 1 };
+        for (int i = 0; i < code.length; i++) {
+            List<Object> tokens = BFPlusPlusMachine.parseTokens(code[i]);
+            System.out.println(tokens);
+            Assert.assertEquals(tokens.size(), tokenSize[i]);
+            List<Object> tree = BFPlusPlusMachine.parseTokensToTree(tokens);
+            System.out.println(tree);
+            Assert.assertEquals(tree.size(), treeSize[i]);
+        }
+    }
 }
