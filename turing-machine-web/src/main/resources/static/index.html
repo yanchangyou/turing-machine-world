@@ -19,8 +19,8 @@
         text-align:center;
     }
 
-    .width80 {
-        width:80%;
+    .width {
+        width:90%;
         margin:auto;
     }
     .font_2rem {
@@ -37,13 +37,13 @@
 
 <div style="text-align:center;">
     <!--    <div class="line center">X</div>-->
-    <!--    <textarea class="line width80" id="x" readonly rows="2">hello,world!-->
+    <!--    <textarea class="line width" id="x" readonly rows="2">hello,world!-->
     <!--Hello World!</textarea>-->
     <!--    <button class="line" onclick="compileX()">compile to java</button>-->
-    <!--    <textarea class="line width80" id="java" readonly rows="1">System.out.println("hello,world!");</textarea>-->
+    <!--    <textarea class="line width" id="java" readonly rows="1">System.out.println("hello,world!");</textarea>-->
     <!--    <button class="line" onclick="compileJava()">BF++</button>-->
     <div class="line center">BF++</div>
-    <textarea class="line width80" id="code" style="height:300px;">
+    <textarea class="line width" id="code" style="height:300px;">
 #原始版本HelloWorld
 >+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]<.>+++++++++++[<+++++>-]<.>++++++++[<+++>-]<.+++.------.--------.[-]>++++++++[<++++>-]<+.[-]++++++++++.
 &_>_>_>_&
@@ -62,20 +62,22 @@
 
 </textarea>
     <div class="line center">input</div>
-    <input class="line width80" id="input" value="Hello World!">
+    <input class="line width" id="input" value="Hello World!">
     <button class="line" onclick="run()">run</button>
     <div class="line center">result</div>
-    <pre class="line width80 result" id="result"></pre>
+    <pre class="line width result" id="result"></pre>
 </div>
 <div>
 
-    <pre class="font_2rem width80 ">
+<pre class="font_2rem width ">
 BF++: Brain F**k的扩展
  1，指令扩展：&(重置到首位)，_(单元格置0)，^(无条件break)，!(有条件break,条件和[一样)
  2，语法扩展：指令后面带数字，表示重复多少次，减少输入；支持括号后面重复N次；比如：输出A， +65.
- 3，注释：支持三种风格，#、//、*
+ 3，注释：#开头
+
+更多资源：
 <a href="https://github.com/yanchangyou/turing-machine-world" target="_blank">github</a>
-<a href="http://www.muppetlabs.com/~breadbox/bf/" target="_blank">查看官网</a>
+<a href="http://www.muppetlabs.com/~breadbox/bf/" target="_blank">BF</a>
 <a href="https://baike.baidu.com/item/Brainfuck" target="_blank">百度百科</a></pre>
 </div>
 <script>

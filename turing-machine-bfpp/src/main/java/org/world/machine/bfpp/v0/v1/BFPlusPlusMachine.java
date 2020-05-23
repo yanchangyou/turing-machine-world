@@ -75,7 +75,7 @@ public class BFPlusPlusMachine {
         String[] lines = code.split("\\\r|\\\n");
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < lines.length; i++) {
-            String[] codeAndComment = lines[i].split("#|\\*|(//)");
+            String[] codeAndComment = lines[i].split("#");
             if (codeAndComment.length > 0) {
                 builder.append(codeAndComment[0]);
             }

@@ -26,7 +26,7 @@
     <modules>
         <module>../turing-machine-default</module>
         <module>../turing-machine-bf</module>
-        <module>../turing-machine-bfplusplus</module>
+        <module>../turing-machine-bfpp</module>
         <module>../turing-machine-lingxi</module>
     </modules>
 </project>

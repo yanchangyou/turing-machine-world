@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>org.world.machine</groupId>
-            <artifactId>turing-machine-bfplusplus</artifactId>
+            <artifactId>turing-machine-bfpp</artifactId>
             <version>0.x-SNAPSHOT</version>
         </dependency>
 
