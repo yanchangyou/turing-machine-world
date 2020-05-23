@@ -166,4 +166,15 @@ public class BFPlusPlusMachineTest {
         System.out.println(oldCode);
         Assert.assertEquals(oldCode, code);
     }
+
+    @Test
+    public void testHello() {
+        String helloWorld = "Hello World!";
+        System.out.print("+72.");
+        for (int i = 0; i < helloWorld.length() - 1; i++) {
+            int diff = helloWorld.charAt(i + 1) - helloWorld.charAt(i);
+            System.out.print((diff > 0 ? "+" : "") + (diff == 0 ? "" : diff) + ".");
+        }
+
+    }
 }
