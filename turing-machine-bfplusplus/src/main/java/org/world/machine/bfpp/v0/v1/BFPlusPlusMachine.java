@@ -2,6 +2,7 @@ package org.world.machine.bfpp.v0.v1;
 
 import org.world.machine.bf.v0.vx.BFMachine;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -31,12 +32,24 @@ public class BFPlusPlusMachine {
      * @param code
      * @return
      */
+    public static String execute(String code, String input) {
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        return execute(code, inputStream, System.out);
+    }
+
+    /**
+     * 先编译，然后执行
+     *
+     * @param code
+     * @return
+     */
     public static String execute(String code, InputStream input, OutputStream output) {
 
         String brainFuckCode = compile(code);
 
         System.out.println("BF code:" + brainFuckCode);
-        return BFMachine.execute(brainFuckCode, input, output);
+        int cellLength = 1024;
+        return BFMachine.execute(brainFuckCode, input, output, cellLength);
 
     }
 
@@ -62,32 +75,11 @@ public class BFPlusPlusMachine {
         String[] lines = code.split("\\\r|\\\n");
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < lines.length; i++) {
-            builder.append(lines[i].split("#")[0]);
-        }
-        return builder.toString();
-    }
-
-    /**
-     * 转换token，成bf语法
-     *
-     * @param tokens
-     * @return
-     */
-    static String convertTokenToBfCode(String[] tokens) {
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < tokens.length; i++) {
-            if (Character.isDigit(tokens[i].charAt(0))) {
-                int number = Integer.parseInt(tokens[i]) - 1;
-                char lastChar = builder.charAt(builder.length() - 1);
-                for (int j = 0; j < number; j++) {
-                    builder.append(lastChar);
-                }
-            } else {
-                builder.append(tokens[i]);
+            String[] codeAndComment = lines[i].split("#|\\*|(//)");
+            if (codeAndComment.length > 0) {
+                builder.append(codeAndComment[0]);
             }
         }
-
         return builder.toString();
     }
 

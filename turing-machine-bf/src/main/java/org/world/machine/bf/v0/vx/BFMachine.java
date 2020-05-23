@@ -34,13 +34,24 @@ public class BFMachine {
      * @param code
      * @return
      */
-    public static String execute(String code, InputStream input, OutputStream output) {
+    public static String execute(String code, InputStream input, OutputStream output, int cellLength) {
 
-        int[] cells = new int[DEFAULT_CELLS_LENGTH];
+        int[] cells = new int[cellLength];
 
         execute(code, cells, input, output);
 
         return convertToString(cells);
+    }
+
+    /**
+     * 先编译，然后执行
+     *
+     * @param code
+     * @return
+     */
+    public static String execute(String code, InputStream input, OutputStream output) {
+
+        return execute(code, input, output, DEFAULT_CELLS_LENGTH);
     }
 
     /**
@@ -139,7 +150,7 @@ public class BFMachine {
                 try {
                     System.out.print("input:");
                     int ch = input.read();
-                    if (ch !=-1) {
+                    if (ch != -1) {
                         cells[index] = ch;
                     }
                 } catch (Exception e) {
