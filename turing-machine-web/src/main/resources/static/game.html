@@ -33,7 +33,9 @@
      .usage {
         margin-top: 50px;
         font-size: 2rem;
+        text-align: center;
      }
+
 
 </style>
 
@@ -42,7 +44,7 @@
     <div class="title">图灵一号游戏机</div>
 
     <pre class="usage">
-        使用说明：按方向键：🔼加一，🔽减一，◀️向左移动，▶️向右移动，最小0
+        使用说明：手指滑动或方向键：🔼加一，🔽减一，◀️向左移动，▶️向右移动，最小0
     </pre>
 
     <div class="cells">
@@ -91,14 +93,10 @@
           changeNumber(currentIndex, -1);
           break;
         case 37: //left
-          renderCell(currentIndex,COMMON_COLOR );
-          currentIndex =  currentIndex<=0 ? 0 : currentIndex-1;
-          renderCell(currentIndex,SELECTED_COLOR );
+          moveLeft();
           break;
         case 39: //right
-          renderCell(currentIndex,COMMON_COLOR );
-          currentIndex =  currentIndex>=7 ? 7 : currentIndex+1;
-          renderCell(currentIndex,SELECTED_COLOR );
+          moveRight()
           break;
         case 13: //enter
           break;
@@ -110,12 +108,67 @@
 
     }
 
+    function moveLeft() {
+
+        renderCell(currentIndex,COMMON_COLOR );
+        currentIndex =  currentIndex<=0 ? 0 : currentIndex-1;
+        renderCell(currentIndex,SELECTED_COLOR );
+    }
+
+    function moveRight() {
+
+        renderCell(currentIndex,COMMON_COLOR );
+        currentIndex =  currentIndex>=7 ? 7 : currentIndex+1;
+        renderCell(currentIndex,SELECTED_COLOR );
+    }
+
     function renderCell(index, color) {
         var cells = document.getElementsByClassName("cell");
         cells[index].style.backgroundColor = color;
     }
 
+    document.addEventListener('touchstart',touch, false);
+    document.addEventListener('touchmove',touch, false);
+    document.addEventListener('touchend',touch, false);
+
+    var clientX_start,clientX_end,clientY_start,clientY_end;
+
+    function touch (event){
+        var event = event || window.event;
+        switch(event.type){
+            case "touchstart":
+                clientX_start=event.touches[0].clientX;
+                clientY_start=event.touches[0].clientY;
+                break;
+            case "touchend":
+                callbackTouchEnd();
+                break;
+            case "touchmove":
+                //event.preventDefault();
+                clientX_end = event.changedTouches[0].clientX;
+                clientY_end = event.changedTouches[0].clientY;
+                break;
+        }
+    }
+    function callbackTouchEnd() {
+       console.log("clientX_start,clientX_end,clientY_start,clientY_end", clientX_start,clientX_end,clientY_start,clientY_end)
+
+       if (Math.abs(clientX_start-clientX_end) > 3 * Math.abs(clientY_start-clientY_end)) {//左右滑动
+            if (clientX_start>clientX_end+50) { //向左
+                moveLeft();
+            } else if (clientX_start < clientX_end-50) { //向右
+               moveRight();
+            }
+       } else if ( Math.abs(clientX_start-clientX_end) * 3 < Math.abs(clientY_start-clientY_end) ) {//上下滑动
+            if (clientY_start>clientY_end+50) { //向上
+                changeNumber(currentIndex, 1);
+            } else if (clientY_start < clientY_end-50) { //向下
+                changeNumber(currentIndex, -1);
+            }
+       }
+    }
     init();
+
 
 </script>
 </body>
