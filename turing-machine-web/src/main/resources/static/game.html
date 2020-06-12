@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图灵一号游戏机</title>
+</head>
+<body onkeypress="keyPress(0)">
+<style>
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .title {
+        margin-top: 40px;
+        font-size: 3rem;
+        color: green;
+    }
+
+    .cells {
+        margin-top: 60px;
+    }
+
+    .cells .cell {
+        background-color: green;
+        color: white;
+        font-size: 5rem;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        line-height: 100px;
+     }
+
+</style>
+
+<div style="text-align:center;">
+
+    <div class="title">图灵一号游戏机</div>
+    <div class="cells">
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+        <span class="cell">0</span>
+    </div>
+</div>
+
+<script>
+    function init() {
+        document.onkeyup = dealKeyCode;
+        renderCell(0, SELECTED_COLOR);
+    }
+
+    function keyPress() {
+        dealKeyCode();
+    }
+
+    function getPressChar() {
+        return String.fromCharCode(event.which);
+    }
+    function changeNumber(index, number) {
+       var cells = document.getElementsByClassName("cell");
+       var newNumber = cells[index].innerText - (-number);
+       cells[index].innerText = newNumber <=0 ? 0 : newNumber;
+    }
+
+    const SELECTED_COLOR = "#a7680b";
+    const COMMON_COLOR = "green";
+
+    var currentIndex = 0;
+    function dealKeyCode() {
+        var keycode = event.which||event.keyCode;
+        console.log(keycode);
+        switch(keycode){
+        case 38: //up
+          changeNumber(currentIndex, 1);
+          break;
+        case 40: //down
+          changeNumber(currentIndex, -1);
+          break;
+        case 37: //left
+          renderCell(currentIndex,COMMON_COLOR );
+          currentIndex =  currentIndex<=0 ? 0 : currentIndex-1;
+          renderCell(currentIndex,SELECTED_COLOR );
+          break;
+        case 39: //right
+          renderCell(currentIndex,COMMON_COLOR );
+          currentIndex =  currentIndex>=7 ? 7 : currentIndex+1;
+          renderCell(currentIndex,SELECTED_COLOR );
+          break;
+        case 13: //enter
+          break;
+        case 27: //esc
+        case 32: //space
+            break;
+        }
+        console.log(currentIndex);
+
+    }
+
+    function renderCell(index, color) {
+        var cells = document.getElementsByClassName("cell");
+        cells[index].style.backgroundColor = color;
+    }
+
+    init();
+
+</script>
+</body>
+</html>
