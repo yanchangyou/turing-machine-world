@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>图灵一号游戏机</title>
 </head>
-<body onkeypress="keyPress(0)">
+<body>
 <style>
     * {
         padding: 0px;
@@ -18,11 +18,10 @@
     }
 
     .cells {
-        margin-top: 60px;
     }
 
-    .cells .cell {
-        background-color: green;
+    .cells .cell,.cellTarget {
+        background-color: #323832;
         color: white;
         font-size: 5rem;
         width: 100px;
@@ -30,10 +29,30 @@
         display: inline-block;
         line-height: 100px;
      }
+     .cellTarget {
+        background-color:green;
+     }
      .usage {
-        margin-top: 50px;
-        font-size: 2rem;
+        margin: 50px 0px 0px 0px;
+        font-size: 3rem;
         text-align: center;
+     }
+
+     .code, .code input {
+        margin-top: 30px;
+        font-size: 3rem;
+     }
+     .code span {
+        font-size: 2rem;
+     }
+     .cell-title {
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-size: 3rem;
+     }
+     .refresh button {
+        margin-top: 40px;
+        font-size: 3rem;
      }
 
 
@@ -43,10 +62,21 @@
 
     <div class="title">图灵一号游戏机</div>
 
-    <pre class="usage">
-        使用说明：手指滑动或方向键：🔼加一，🔽减一，◀️向左移动，▶️向右移动，最小0
-    </pre>
+    <pre class="usage">使用说明：单手指滑动、或方向键、或输入代码指令执行
+🔼加1，🔽减1，◀️向左移动，▶️向右移动，最小0，最大99</pre>
 
+    <div class="cell-title">目标值</div>
+    <div class="cells" id="targetCell">
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+        <span class="cellTarget">0</span>
+    </div>
+    <div class="cell-title">当前值</div>
     <div class="cells">
         <span class="cell">0</span>
         <span class="cell">0</span>
@@ -57,13 +87,34 @@
         <span class="cell">0</span>
         <span class="cell">0</span>
     </div>
+    <div class="refresh">
+        <button onclick="init();">再来一局</button>
+    </div>
+    <div class="code">
+
+        <input id="code" value=">+>>+>>+>>+<<<<<<<" size="40">
+        <br>
+        <span class="usage">代码指令：+、-、&gt;、&lt;（后面两个是移动方向）</span>
+    </div>
 </div>
 
 <script>
-    function init() {
-        document.onkeyup = dealKeyCode;
-        renderCell(0, SELECTED_COLOR);
-    }
+
+
+    const SELECTED_COLOR = "#a7680b";
+    const COMMON_COLOR = "#323832";
+    const TARGET_COLOR = "green";
+    const MIN_MOVE = 10;
+
+    var currentIndex = 0;
+
+    var startX,endX,startY,endY;
+
+    var matchedMap = {};
+
+    document.addEventListener('touchstart',touch, false);
+    document.addEventListener('touchmove',touch, false);
+    document.addEventListener('touchend',touch, false);
 
     function keyPress() {
         dealKeyCode();
@@ -73,100 +124,184 @@
         return String.fromCharCode(event.which);
     }
     function changeNumber(index, number) {
-       var cells = document.getElementsByClassName("cell");
+       if (matchedMap[index]){
+         return;
+       }
+       var cells = get(".cell");
        var newNumber = cells[index].innerText - (-number);
-       cells[index].innerText = newNumber <=0 ? 0 : newNumber;
+       newNumber = newNumber <= 0 ? 0 : newNumber;
+       newNumber = newNumber >= 99 ? 99 : newNumber;
+       cells[index].innerText = newNumber;
     }
 
-    const SELECTED_COLOR = "#a7680b";
-    const COMMON_COLOR = "green";
-
-    var currentIndex = 0;
     function dealKeyCode() {
         var keycode = event.which||event.keyCode;
-        console.log(keycode);
+        //console.log(keycode);
         switch(keycode){
         case 38: //up
-          changeNumber(currentIndex, 1);
+          runCode("+");
           break;
         case 40: //down
-          changeNumber(currentIndex, -1);
+          runCode("-");
           break;
         case 37: //left
-          moveLeft();
+          runCode("<");
           break;
         case 39: //right
-          moveRight()
+          runCode(">");
           break;
         case 13: //enter
+          cleanNodeCodeChar();
+          var code = get("#code").value;
+          runCode(code);
           break;
         case 27: //esc
         case 32: //space
             break;
         }
-        console.log(currentIndex);
+        //console.log(currentIndex);
 
     }
 
     function moveLeft() {
 
-        renderCell(currentIndex,COMMON_COLOR );
+        renderCell(currentIndex,COMMON_COLOR);
         currentIndex =  currentIndex<=0 ? 0 : currentIndex-1;
         renderCell(currentIndex,SELECTED_COLOR );
     }
 
     function moveRight() {
 
-        renderCell(currentIndex,COMMON_COLOR );
+        renderCell(currentIndex,COMMON_COLOR);
         currentIndex =  currentIndex>=7 ? 7 : currentIndex+1;
         renderCell(currentIndex,SELECTED_COLOR );
     }
 
     function renderCell(index, color) {
-        var cells = document.getElementsByClassName("cell");
+
+        var cells = get(".cell");
         cells[index].style.backgroundColor = color;
+
     }
-
-    document.addEventListener('touchstart',touch, false);
-    document.addEventListener('touchmove',touch, false);
-    document.addEventListener('touchend',touch, false);
-
-    var clientX_start,clientX_end,clientY_start,clientY_end;
 
     function touch (event){
         var event = event || window.event;
         switch(event.type){
             case "touchstart":
-                clientX_start=event.touches[0].clientX;
-                clientY_start=event.touches[0].clientY;
+                startX=event.touches[0].clientX;
+                startY=event.touches[0].clientY;
                 break;
             case "touchend":
                 callbackTouchEnd();
                 break;
             case "touchmove":
                 //event.preventDefault();
-                clientX_end = event.changedTouches[0].clientX;
-                clientY_end = event.changedTouches[0].clientY;
+                endX = event.changedTouches[0].clientX;
+                endY = event.changedTouches[0].clientY;
                 break;
         }
     }
-    function callbackTouchEnd() {
-       console.log("clientX_start,clientX_end,clientY_start,clientY_end", clientX_start,clientX_end,clientY_start,clientY_end)
 
-       if (Math.abs(clientX_start-clientX_end) > 3 * Math.abs(clientY_start-clientY_end)) {//左右滑动
-            if (clientX_start>clientX_end+50) { //向左
-                moveLeft();
-            } else if (clientX_start < clientX_end-50) { //向右
-               moveRight();
+    function callbackTouchEnd() {
+       //console.log("startX,endX,startY,endY", startX,endX,startY,endY)
+
+       if (Math.abs(startX-endX) > 1.5 * Math.abs(startY-endY)) {//左右滑动
+            if (startX>endX+MIN_MOVE) { //向左
+                runCode(">");
+            } else if (startX < endX-MIN_MOVE) { //向右
+               runCode("<");
             }
-       } else if ( Math.abs(clientX_start-clientX_end) * 3 < Math.abs(clientY_start-clientY_end) ) {//上下滑动
-            if (clientY_start>clientY_end+50) { //向上
-                changeNumber(currentIndex, 1);
-            } else if (clientY_start < clientY_end-50) { //向下
-                changeNumber(currentIndex, -1);
+       } else if ( Math.abs(startX-endX) * 1.5 < Math.abs(startY-endY) ) {//上下滑动
+            if (startY>endY+MIN_MOVE) { //向上
+                runCode("+");
+            } else if (startY < endY-MIN_MOVE) { //向下
+                runCode("-");
             }
        }
     }
+
+    function runCode(code) {
+
+        for(var i=0; i<code.length; i++) {
+            var char = code.charAt(i);
+            switch(char) {
+            case "+":changeNumber(currentIndex, 1);break;
+            case "-":changeNumber(currentIndex, -1);break;
+            case "<":moveLeft();break;
+            case ">":moveRight();break;
+            }
+        }
+        checkResult();
+    }
+
+    function checkResult() {
+         var cells = get(".cell");
+         var cellTargets = get(".cellTarget");
+         for(var i=0; i<cells.length; i++) {
+            if (cells[i].innerText === cellTargets[i].innerText) {
+               cells[i].style.backgroundColor = TARGET_COLOR;
+               matchedMap[i] = true;
+            }
+         }
+         renderCell(currentIndex,SELECTED_COLOR);
+
+         var matchedCount = 0;
+         for(var p in matchedMap) {
+            if (matchedMap[p]) {
+               matchedCount ++;
+            }
+         }
+         if (matchedCount === 8) {
+            alert("恭喜通关了！");
+         }
+    }
+
+    function cleanNodeCodeChar() {
+
+        var code = get("#code").value;
+        code = code.replace(/[^+-<>]/g,"");
+        get("#code").value = code;
+    }
+
+    function initTargetCellValue() {
+         var cells = get(".cellTarget");
+         for(var i=0; i<cells.length; i++) {
+            cells[i].innerText = getRandom(0,99);
+         }
+    }
+
+    function initCellValue() {
+
+         currentIndex = 0;
+         var cells = get(".cell");
+         for(var i=0; i<cells.length; i++) {
+            cells[i].innerText = 0;
+           cells[i].style.backgroundColor = COMMON_COLOR;
+         }
+    }
+
+    function get(which) {
+        if(which.charAt(0) === "#") {
+            return document.getElementById(which.substring(1));
+        } else if (which.charAt(0) === ".") {
+            return document.getElementsByClassName(which.substring(1));
+        } else {
+            return document.getElementsByTagName(which);
+        }
+    }
+
+    function getRandom(min, max) {
+        var random = Math.round(Math.random()*10000);
+        return random%max + min;
+    }
+
+    function init() {
+        initTargetCellValue();
+        initCellValue();
+        document.onkeyup = dealKeyCode;
+        renderCell(0, SELECTED_COLOR);
+    }
+
     init();
 
 
