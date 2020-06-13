@@ -20,7 +20,7 @@
     .cells {
     }
 
-    .cells .cell,.cellTarget {
+    .cells .cell,.cell-target,.cell-operation {
         background-color: #323832;
         color: white;
         font-size: 5rem;
@@ -29,18 +29,29 @@
         display: inline-block;
         line-height: 100px;
      }
-     .cellTarget {
+     .cell-operation{
+        background-color: #a7680b;
+        width: 200px;
+     }
+     .cell-target {
         background-color:green;
      }
      .usage {
+        display: none;
         margin: 50px 0px 0px 0px;
         font-size: 3rem;
         text-align: center;
      }
 
+     .code {
+        display:none;
+     }
      .code, .code input {
         margin-top: 30px;
         font-size: 3rem;
+     }
+    .code input {
+         width: 40%;
      }
      .code span {
         font-size: 2rem;
@@ -54,27 +65,32 @@
         margin-top: 40px;
         font-size: 3rem;
      }
-
+     .operation {
+        margin-top: 15%;
+        font-size: 3rem;
+     }
 
 </style>
 
 <div style="text-align:center;">
 
-    <div class="title">图灵一号游戏机</div>
+    <div class="title" onclick="clickTitle();">图灵一号游戏机</div>
 
-    <pre class="usage">使用说明：单手指滑动、或方向键、或输入代码指令执行
-🔼加1，🔽减1，◀️向左移动，▶️向右移动，最小0，最大99</pre>
+    <div class="usage">
+        使用说明：单手指滑动、或方向键、或输入代码指令执行<br>
+        🔼加1，🔽减1，◀️向左移动，▶️向右移动，最小0，最大99
+    </div>
 
     <div class="cell-title">目标值</div>
     <div class="cells" id="targetCell">
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
-        <span class="cellTarget">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
+        <span class="cell-target">0</span>
     </div>
     <div class="cell-title">当前值</div>
     <div class="cells">
@@ -92,10 +108,11 @@
     </div>
     <div class="code">
 
-        <input id="code" value=">+>>+>>+>>+<<<<<<<" size="40">
+        <input id="code" value="++++>+++++>++++>+++++>++++++++>+++++>++++>+++++>++++>+<<<<<<<<">
         <br>
         <span class="usage">代码指令：+、-、&gt;、&lt;（后面两个是移动方向）</span>
     </div>
+    <div class="operation"><span class="cell-operation">滑动</span></div>
 </div>
 
 <script>
@@ -106,7 +123,12 @@
     const TARGET_COLOR = "green";
     const MIN_MOVE = 10;
 
+    // 当点击8次是显示，代码输入框
+    var titleClickCount = 0;
+
     var currentIndex = 0;
+
+    var isShowPassed = false;
 
     var startX,endX,startY,endY;
 
@@ -153,7 +175,9 @@
         case 13: //enter
           cleanNodeCodeChar();
           var code = get("#code").value;
-          runCode(code);
+          for(var i=0; i<code.length; i++) {
+            runCode(code.charAt(i)+"");
+          }
           break;
         case 27: //esc
         case 32: //space
@@ -207,9 +231,9 @@
 
        if (Math.abs(startX-endX) > 1.5 * Math.abs(startY-endY)) {//左右滑动
             if (startX>endX+MIN_MOVE) { //向左
-                runCode(">");
+                runCode("<");
             } else if (startX < endX-MIN_MOVE) { //向右
-               runCode("<");
+               runCode(">");
             }
        } else if ( Math.abs(startX-endX) * 1.5 < Math.abs(startY-endY) ) {//上下滑动
             if (startY>endY+MIN_MOVE) { //向上
@@ -236,7 +260,7 @@
 
     function checkResult(code) {
          var cells = get(".cell");
-         var cellTargets = get(".cellTarget");
+         var cellTargets = get(".cell-target");
          for(var i=0; i<cells.length; i++) {
             if (cells[i].innerText === cellTargets[i].innerText) {
                cells[i].style.backgroundColor = TARGET_COLOR;
@@ -254,7 +278,10 @@
             }
          }
          if (matchedCount === 8) {
-            alert("恭喜通关了！");
+            if(!isShowPassed) {
+                isShowPassed = true;
+                alert("恭喜通关了！");
+            }
          }
     }
 
@@ -266,14 +293,14 @@
     }
 
     function initTargetCellValue() {
-         var cells = get(".cellTarget");
+         var cells = get(".cell-target");
          for(var i=0; i<cells.length; i++) {
             cells[i].innerText = getRandom(0,99);
          }
     }
 
     function initCellValue() {
-
+         matchedMap = {};
          currentIndex = 0;
          var cells = get(".cell");
          for(var i=0; i<cells.length; i++) {
@@ -298,10 +325,18 @@
     }
 
     function init() {
+        isShowPassed = false;
         initTargetCellValue();
         initCellValue();
         document.onkeyup = dealKeyCode;
         renderCell(0, SELECTED_COLOR);
+    }
+
+    function clickTitle() {
+        titleClickCount++;
+        if (titleClickCount>=3) {
+            get(".code")[0].style.display = "block";
+        }
     }
 
     init();
