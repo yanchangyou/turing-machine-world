@@ -20,7 +20,7 @@
     .cells {
     }
 
-    .cells .cell,.cell-target,.cell-operation {
+    .cells .cell,.cell-target,.cell-operation, .padding {
         background-color: #323832;
         color: white;
         font-size: 5rem;
@@ -29,10 +29,7 @@
         display: inline-block;
         line-height: 100px;
      }
-     .cell-operation{
-        background-color: #a7680b;
-        width: 200px;
-     }
+
      .cell-target {
         background-color:green;
      }
@@ -61,13 +58,27 @@
         margin-bottom: 10px;
         font-size: 3rem;
      }
-     .refresh button {
+     .replay button {
         margin-top: 40px;
         font-size: 3rem;
      }
      .operation {
         margin-top: 15%;
-        font-size: 3rem;
+        font-size: 2rem;
+     }
+     .cell-operation,.operation .padding {
+        padding-top:25px;
+        font-size: 2rem;
+        line-height: 30px;
+        height: 75px;
+        width:100px;
+        background-color: #a7680b;
+        display: inline-block;
+        vertical-align: top;
+     }
+     .operation .padding {
+        width: 50px;
+        background-color: green;
      }
 
 </style>
@@ -103,8 +114,8 @@
         <span class="cell">0</span>
         <span class="cell">0</span>
     </div>
-    <div class="refresh">
-        <button onclick="init();">再来一局</button>
+    <div class="replay">
+        <button onclick="init();">再玩一次</button>
     </div>
     <div class="code">
 
@@ -112,11 +123,14 @@
         <br>
         <span class="usage">代码指令：+、-、&gt;、&lt;（后面两个是移动方向）</span>
     </div>
-    <div class="operation"><span class="cell-operation">滑动</span></div>
+    <div class="operation">
+        <span class="padding">　</span>
+        <span class="cell-operation">上下左右<br/>滑动</span>
+        <span class="padding">　</span>
+    </div>
 </div>
 
 <script>
-
 
     const SELECTED_COLOR = "#a7680b";
     const COMMON_COLOR = "#323832";
@@ -281,6 +295,7 @@
             if(!isShowPassed) {
                 isShowPassed = true;
                 alert("恭喜通关了！");
+                showOrNot(".replay", true);
             }
          }
     }
@@ -325,6 +340,7 @@
     }
 
     function init() {
+        showOrNot(".replay", false);
         isShowPassed = false;
         initTargetCellValue();
         initCellValue();
@@ -335,7 +351,18 @@
     function clickTitle() {
         titleClickCount++;
         if (titleClickCount>=3) {
-            get(".code")[0].style.display = "block";
+            showOrNot(".code", true);
+        }
+    }
+
+    function showOrNot(which, flag) {
+        var dom = get(which);
+        if (typeof(dom['length']) === 'undefined') {
+            dom.style.display = "block";
+        } else {
+            for(var i=0;i < dom.length; i++) {
+                dom[i].style.display = flag?"block":"none";
+            }
         }
     }
 
