@@ -231,10 +231,10 @@
             case ">":moveRight();break;
             }
         }
-        checkResult();
+        checkResult(code);
     }
 
-    function checkResult() {
+    function checkResult(code) {
          var cells = get(".cell");
          var cellTargets = get(".cellTarget");
          for(var i=0; i<cells.length; i++) {
@@ -243,7 +243,9 @@
                matchedMap[i] = true;
             }
          }
-         renderCell(currentIndex,SELECTED_COLOR);
+         if (code == ">" || code == "<") {
+            renderCell(currentIndex,SELECTED_COLOR);
+         }
 
          var matchedCount = 0;
          for(var p in matchedMap) {
@@ -276,7 +278,7 @@
          var cells = get(".cell");
          for(var i=0; i<cells.length; i++) {
             cells[i].innerText = 0;
-           cells[i].style.backgroundColor = COMMON_COLOR;
+            cells[i].style.backgroundColor = COMMON_COLOR;
          }
     }
 
