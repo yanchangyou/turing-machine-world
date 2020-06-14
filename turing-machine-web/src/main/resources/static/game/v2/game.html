@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>图灵一号游戏机</title>
+    <title>图灵二号游戏机</title>
+    <script src="../../js/util.js"></script>
 </head>
 <body>
 <style>
@@ -80,6 +81,8 @@
         background-color: green;
      }
 
+
+
 </style>
 
 <div style="text-align:center;">
@@ -114,7 +117,7 @@
         <span class="cell">0</span>
     </div>
     <div class="replay">
-        <button onclick="init();">再玩一次</button>
+        <button onclick="replay();">再玩一次</button>
     </div>
     <div class="code">
 
@@ -131,6 +134,7 @@
 
 <script>
 
+    const URL_PREFIX = "http://localhost:9090";
     const SELECTED_COLOR = "#a7680b";
     const COMMON_COLOR = "#323832";
     const TARGET_COLOR = "green";
@@ -158,15 +162,20 @@
     function getPressChar() {
         return String.fromCharCode(event.which);
     }
+
     function changeNumber(index, number) {
        if (matchedMap[index]){
          return;
        }
        var cells = get(".cell");
-       var newNumber = cells[index].innerText - (-number);
-       newNumber = newNumber <= 0 ? 0 : newNumber;
-       newNumber = newNumber >= 99 ? 99 : newNumber;
-       cells[index].innerText = newNumber;
+       var operate = number === 1?"A":"S";
+       request(URL_PREFIX+"/game/update/"+index+"/"+operate,function(result) {
+           var cellsValue = JSON.parse(result);
+           for(var i=0; i<cells.length; i++) {
+               cells[i].innerText = cellsValue[i];
+           }
+           checkResult(number === 1?"+":"-");
+       });
     }
 
     function dealKeyCode() {
@@ -308,19 +317,27 @@
 
     function initTargetCellValue() {
          var cells = get(".cell-target");
-         for(var i=0; i<cells.length; i++) {
-            cells[i].innerText = getRandom(0,99);
-         }
+         request(URL_PREFIX + "/game/viewTarget", function(result) {
+            var targetCells = JSON.parse(result);
+            for(var i=0; i<cells.length; i++) {
+                cells[i].innerText = targetCells[i];
+            }
+         });
     }
 
     function initCellValue() {
          matchedMap = {};
          currentIndex = 0;
          var cells = get(".cell");
-         for(var i=0; i<cells.length; i++) {
-            cells[i].innerText = 0;
-            cells[i].style.backgroundColor = COMMON_COLOR;
-         }
+         request(URL_PREFIX + "/game/view", function(result) {
+           var cellsValue = JSON.parse(result);
+            for(var i=0; i<cells.length; i++) {
+                cells[i].innerText = cellsValue[i];
+                cells[i].style.backgroundColor = COMMON_COLOR;
+            }
+            checkResult("");
+            renderCell(0, SELECTED_COLOR);
+         })
     }
 
     function get(which) {
@@ -338,13 +355,18 @@
         return random%max + min;
     }
 
+    function replay() {
+        request(URL_PREFIX + "/game/init", function(result) {
+            init();
+        })
+    }
+
     function init() {
         showOrNot(".replay", false);
         isShowPassed = false;
         initTargetCellValue();
-        initCellValue();
+        setTimeout(initCellValue,100);
         document.onkeyup = dealKeyCode;
-        renderCell(0, SELECTED_COLOR);
     }
 
     function clickTitle() {
@@ -366,6 +388,7 @@
     }
 
     init();
+
 
 
 </script>

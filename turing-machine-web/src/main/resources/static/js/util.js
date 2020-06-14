@@ -98,7 +98,7 @@ function postForm(url, data, callback) {
 
 function request(url, callback, method, data, contentType) {
     method = (method ? method : "GET");
-    xmlhttp = null;
+    var xmlhttp = null;
     if (window.XMLHttpRequest) {// code for all new browsers
         xmlhttp = new XMLHttpRequest();
     } else if (window.ActiveXObject) {// code for IE5 and IE6
