@@ -87,7 +87,7 @@ BF++: Brain F**k的扩展
         var input = document.getElementById("input").value;
         var formData = 'code='+encodeURIComponent(code);
         formData += "&input="+encodeURIComponent(input);
-        var url = "/execute";
+        var url = "/api/index/execute";
 
         postForm(url, formData, function(result) {
 

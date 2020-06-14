@@ -81,8 +81,6 @@
         background-color: green;
      }
 
-
-
 </style>
 
 <div style="text-align:center;">
@@ -134,7 +132,7 @@
 
 <script>
 
-    const URL_PREFIX = "http://localhost:9090";
+    const URL_PREFIX = "http://localhost:9090/api/game";
     const SELECTED_COLOR = "#a7680b";
     const COMMON_COLOR = "#323832";
     const TARGET_COLOR = "green";
@@ -169,7 +167,7 @@
        }
        var cells = get(".cell");
        var operate = number === 1?"A":"S";
-       request(URL_PREFIX+"/game/update/"+index+"/"+operate,function(result) {
+       request(URL_PREFIX+"/update/"+index+"/"+operate,function(result) {
            var cellsValue = JSON.parse(result);
            for(var i=0; i<cells.length; i++) {
                cells[i].innerText = cellsValue[i];
@@ -283,10 +281,14 @@
     function checkResult(code) {
          var cells = get(".cell");
          var cellTargets = get(".cell-target");
+         var isAllZero = true;
          for(var i=0; i<cells.length; i++) {
             if (cells[i].innerText === cellTargets[i].innerText) {
                cells[i].style.backgroundColor = TARGET_COLOR;
                matchedMap[i] = true;
+               if (cellTargets[i].innerText !== "0") {
+                    isAllZero = false;
+               }
             }
          }
          if (code == ">" || code == "<") {
@@ -300,7 +302,9 @@
             }
          }
          if (matchedCount === 8) {
-            if(!isShowPassed) {
+            if(isAllZero) {
+                replay();
+            } else if(!isShowPassed) {
                 isShowPassed = true;
                 alert("恭喜通关了！");
                 showOrNot(".replay", true);
@@ -317,7 +321,7 @@
 
     function initTargetCellValue() {
          var cells = get(".cell-target");
-         request(URL_PREFIX + "/game/viewTarget", function(result) {
+         request(URL_PREFIX + "/viewTarget", function(result) {
             var targetCells = JSON.parse(result);
             for(var i=0; i<cells.length; i++) {
                 cells[i].innerText = targetCells[i];
@@ -329,7 +333,7 @@
          matchedMap = {};
          currentIndex = 0;
          var cells = get(".cell");
-         request(URL_PREFIX + "/game/view", function(result) {
+         request(URL_PREFIX + "/view", function(result) {
            var cellsValue = JSON.parse(result);
             for(var i=0; i<cells.length; i++) {
                 cells[i].innerText = cellsValue[i];
@@ -356,7 +360,7 @@
     }
 
     function replay() {
-        request(URL_PREFIX + "/game/init", function(result) {
+        request(URL_PREFIX + "/init", function(result) {
             init();
         })
     }
@@ -388,8 +392,6 @@
     }
 
     init();
-
-
 
 </script>
 </body>

@@ -11,7 +11,7 @@ import java.util.Random;
  * @author yanchangyou
  */
 @RestController
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 public class GameController {
 
     public static final char ADD = 'A';
