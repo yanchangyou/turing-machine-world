@@ -48,7 +48,7 @@ public class JsonTopologyUtil {
      * @param json2
      * @return
      */
-    static boolean compareJsonTopology(JSON json1, JSON json2) {
+    public static boolean compareJsonTopology(JSON json1, JSON json2) {
         return getJsonTopology(json1).equals(getJsonTopology(json2));
     }
 
@@ -68,7 +68,7 @@ public class JsonTopologyUtil {
      * @param json
      * @return
      */
-    static String getJsonTopologyString(JSON json) {
+    public static String getJsonTopologyString(JSON json) {
         return getTopologyString(getJsonTopology(json))
                 .replaceAll(",$", "")
                 .replace('0', 'N')
@@ -280,11 +280,11 @@ public class JsonTopologyUtil {
      * @param json
      * @return
      */
-    static JSON convertToStandardJson(JSON json) {
+    public static JSON getStandardJson(JSON json) {
         List topologyList = getJsonTopology(json);
         sortFieldTypes(topologyList);
         JSONObject root = new JSONObject();
-        convertToStandardJson(topologyList, root, 0, 0);
+        getStandardJson(topologyList, root, 0, 0);
         return (JSON) root.get("`00");
     }
 
@@ -296,7 +296,7 @@ public class JsonTopologyUtil {
      * @param level
      * @param index
      */
-    static void convertToStandardJson(List topologyList, JSON json, int level, int index) {
+    static void getStandardJson(List topologyList, JSON json, int level, int index) {
 
         for (Object item : topologyList) {
             String key = "" + (char) ('a' + level - 1) + formatInt(index);
@@ -307,13 +307,13 @@ public class JsonTopologyUtil {
             // object
             else if (item instanceof ArrayList) {
                 JSONObject child = new JSONObject(true);
-                convertToStandardJson((List) item, child, level + 1, 0);
+                getStandardJson((List) item, child, level + 1, 0);
                 setValue(json, key, child);
             }
             // array
             else if (item instanceof LinkedList) {
                 JSONArray childArray = new JSONArray();
-                convertToStandardJson((List) item, childArray, level, index);
+                getStandardJson((List) item, childArray, level, index);
                 setValue(json, key, childArray);
             }
             index++;

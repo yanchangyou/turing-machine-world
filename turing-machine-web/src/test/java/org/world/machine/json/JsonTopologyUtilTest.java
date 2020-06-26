@@ -232,9 +232,9 @@ public class JsonTopologyUtilTest {
 
     @Test
     public void testConvertToStandardJson() {
-        JSON result = JsonTopologyUtil.convertToStandardJson(getJson1());
+        JSON result = JsonTopologyUtil.getStandardJson(getJson1());
         System.out.println(result.toString(SerializerFeature.WriteMapNullValue));
-        result = JsonTopologyUtil.convertToStandardJson(getJson11());
+        result = JsonTopologyUtil.getStandardJson(getJson11());
         System.out.println(result.toString(SerializerFeature.WriteMapNullValue));
     }
 }

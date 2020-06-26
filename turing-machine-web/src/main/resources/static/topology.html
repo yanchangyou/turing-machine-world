@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON拓扑结构</title>
+    <script src="js/util.js"></script>
+</head>
+<body>
+<style>
+
+    .line {
+        display:block;
+        margin:10px auto;
+        font-size:1.5rem;
+        text-align:left;
+    }
+
+    div.center {
+        text-align:center;
+    }
+
+    .width {
+        width:90%;
+        margin:auto;
+    }
+    .font_2rem {
+        font-size:1.5rem;
+     }
+
+    .result {
+        color: white;
+        padding: 10px;
+    }
+
+</style>
+
+<div style="text-align:center;">
+    <div class="line center">JSON拓扑结构</div>
+    <textarea class="line width" id="json" style="height:300px;">
+{
+    "Image": {
+        "Width": 800,
+        "Height": 600,
+        "Title": "View from 15th Floor",
+        "Thumbnail": {
+            "Url": "http://www.example.com/image/481989943",
+            "Height": 125,
+            "Width": "100"
+        },
+        "IDs": [116, 943, 234, 38793],
+
+        "GPS": [{
+                "precision": "zip",
+                "Latitude": 37.7668,
+                "Longitude": -122.3959,
+                "Address": "",
+                "City": "SAN FRANCISCO",
+                "State": "CA",
+                "Zip": "94107",
+                "Country": "US"
+            },
+            {
+                "precision": "zip",
+                "Latitude": 37.371991,
+                "Longitude": -122.026020,
+                "Address": "",
+                "City": "SUNNYVALE",
+                "State": "CA",
+                "Zip": "94085",
+                "Country": "US"
+            }
+        ]
+    }
+}</textarea>
+    <button class="line" onclick="parse()">解析</button>
+    <div class="line center">拓扑结构</div>
+    <pre class="line width result" id="topology"></pre>
+    <div class="line center">标准JSON</div>
+    <pre class="line width result" id="standard"></pre>
+<!--    <pre class="line width result" id="compare"></pre>-->
+</div>
+<div>
+    <br/>
+    <br/>
+<pre class="font_2rem width ">
+JSON 拓扑结构：
+   1，忽略：名称、值、数组大小
+   2，保留：字段层级、数量和顺序
+</pre>
+</div>
+<script>
+
+    function parse() {
+       getTopology();
+       getTopologyStandardJson();
+    }
+    function getTopology() {
+        var json = document.getElementById("json").value;
+        var formData = 'json='+encodeURIComponent(json);
+        var url = "/api/json/topology/getTopology";
+
+        postForm(url, formData, function(result) {
+
+            document.getElementById("topology").innerHTML = result;
+        });
+    }
+
+    function getTopologyStandardJson() {
+        var json = document.getElementById("json").value;
+        var formData = 'json='+encodeURIComponent(json);
+        var url = "/api/json/topology/getStandardJson";
+
+        postForm(url, formData, function(result) {
+
+            document.getElementById("standard").innerHTML = formatJson(JSON.parse(result),"  ","");
+        });
+    }
+
+</script>
+</body>
+</html>
