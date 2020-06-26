@@ -345,7 +345,7 @@ public class JsonTopologyUtil {
                 value = 1;
                 break;
             case DOUBLE:
-                value = 1.0;
+                value = 1.1;
                 break;
             case BOOLEAN:
                 value = true;

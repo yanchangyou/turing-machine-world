@@ -9,19 +9,19 @@ function cloneObject(original, target) {
 }
 
 function isBasicDataType(value) {
-    return (typeof (value) === "string" || typeof (value) === "number" || typeof (value) === "boolean");
+    return value == null || (typeof (value) === "string" || typeof (value) === "number" || typeof (value) === "boolean");
 }
 
 function formatJson(jsonObject, padding, end) {
     var formatted = '';
 
     if (isBasicDataType(jsonObject)) {
-        return jsonObject;
+        return typeof(jsonObject) === "string" ?"\""+ jsonObject+"\"":jsonObject;
     } else if (jsonObject && typeof (jsonObject['length']) !== "undefined") {
         formatted += "[";
         for (var i = 0; i < jsonObject.length; i++) {
-            var thisEnd = (i != jsonObject.length - 1) ? ",\r\n" : "\r\n";
-            var thisBegin = (i == 0) ? "\r\n" + padding : padding;
+            var thisEnd = ((i != jsonObject.length - 1) ? "," : "") + "\r\n";
+            var thisBegin = ((i == 0 && !isBasicDataType(jsonObject[i])) ? "\r\n"  : "") + (isBasicDataType(jsonObject[i])?"":padding);
             formatted += thisBegin + formatJson(jsonObject[i], "    " + padding, thisEnd) + '';
         }
         formatted += (isBasicDataType(jsonObject[0] || null) ? "" : padding.substr(4)) + "]" + end;
