@@ -146,4 +146,10 @@ public class JsonTopologyUtilTest {
             }
         }
     }
+
+    @Test
+    public void testConvertToJsonExpress() {
+        Object result = JsonTopologyUtil.convertToJsonExpress(getJson1());
+        System.out.println(result.toString().replace(',','\n'));
+    }
 }

@@ -226,27 +226,49 @@ public class JsonTopologyUtil {
         return 8;
     }
 
-    static void convertToTopologyExpress(List topologyList, List<String> expressList, String parentKey, int level) {
+    /**
+     * 获取全部叶子节点的表达式
+     *
+     * @param json
+     * @return
+     */
+    static List<String> convertToJsonExpress(JSON json) {
+        List topologyList = getJsonTopology(json);
+        List<String> expressList = new ArrayList<>();
+        convertToJsonExpress(topologyList, expressList, "", 0, 0);
 
-        int index = 0;
+        return expressList;
+    }
+
+    /**
+     * json 表达式
+     *
+     * @param topologyList
+     * @param expressList
+     * @param parentKey
+     * @param level
+     * @param index
+     */
+    static void convertToJsonExpress(List topologyList, List<String> expressList, String parentKey, int level,
+            int index) {
+
         for (Object item : topologyList) {
             // primitive
             if (item instanceof String) {
                 String express = parentKey + "." + item + index;
-                express = express.replaceAll("(\\[\\]).([\\d\\w]+)", "$2$1");
+                express = express.replaceAll("(\\[\\]).([\\d\\w]+)", "$2$1").replaceAll("\\.`0\\.", "");
                 expressList.add(express);
             }
             // object
             else if (item instanceof ArrayList) {
                 String key = parentKey + "." + (char) ('a' + level - 1) + index;
-                convertToTopologyExpress((List) item, expressList, key, level + 1);
+                convertToJsonExpress((List) item, expressList, key, level + 1, 0);
             }
             // array
             else if (item instanceof LinkedList) {
 
-                //                String key = parentKey+"." + (char)('a'+level-1) + index + "[]";
                 String key = parentKey + ".[]";
-                convertToTopologyExpress((List) item, expressList, key, level + 1);
+                convertToJsonExpress((List) item, expressList, key, level, index);
             }
             index++;
         }
