@@ -306,15 +306,12 @@ public class JsonTopologyUtil {
             }
             // object
             else if (item instanceof ArrayList) {
-                //                String key = "" + (char) ('a' + level - 1) + index;
                 JSONObject child = new JSONObject(true);
                 convertToStandardJson((List) item, child, level + 1, 0);
                 setValue(json, key, child);
             }
             // array
             else if (item instanceof LinkedList) {
-
-                //                String key = "" + (char) ('a' + level - 1) + index;
                 JSONArray childArray = new JSONArray();
                 convertToStandardJson((List) item, childArray, level, index);
                 setValue(json, key, childArray);
