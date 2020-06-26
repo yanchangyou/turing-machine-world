@@ -26,12 +26,6 @@ public class JsonTopologyUtilTest {
 
         boolean isSame = JsonTopologyUtil.compareJsonTopology(json1, json2);
 
-        if (isSame) {
-            System.out.println("拓扑结构相同");
-        } else {
-            System.out.println("拓扑结构不相同");
-        }
-
         System.out.println(JsonTopologyUtil.getJsonTopologyString(json1));
         System.out.println(JsonTopologyUtil.getJsonTopologyString(json2));
 
