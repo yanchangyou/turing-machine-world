@@ -102,7 +102,7 @@ public class JsonTopologyUtil {
     static void makeJsonTypeList(Object value, List fieldTypes) {
 
         if (value == null) {
-            fieldTypes.add(JsonValueType.NULL.getCode());
+            fieldTypes.add(JsonValueType.NULL);
         } else if (value instanceof JSONArray) {
             JSONArray array = (JSONArray) value;
             List arrayList = new LinkedList();
@@ -123,14 +123,14 @@ public class JsonTopologyUtil {
 
         } else if (value instanceof Number) {
             if (value instanceof Double || value instanceof Float || value instanceof BigDecimal) {
-                fieldTypes.add(JsonValueType.DOUBLE.getCode());
+                fieldTypes.add(JsonValueType.DOUBLE);
             } else {
-                fieldTypes.add(JsonValueType.INT.getCode());
+                fieldTypes.add(JsonValueType.INT);
             }
         } else if (value instanceof String) {
-            fieldTypes.add(JsonValueType.STRING.getCode());
+            fieldTypes.add(JsonValueType.STRING);
         } else if (value instanceof Boolean) {
-            fieldTypes.add(JsonValueType.BOOLEAN.getCode());
+            fieldTypes.add(JsonValueType.BOOLEAN);
         }
     }
 
@@ -201,19 +201,19 @@ public class JsonTopologyUtil {
      * @return
      */
     static int getOrderValue(Object value) {
-        if (JsonValueType.NULL.getCode().equals(value)) {
+        if (JsonValueType.NULL.equals(value)) {
             return 0;
         }
-        if (JsonValueType.STRING.getCode().equals(value)) {
+        if (JsonValueType.STRING.equals(value)) {
             return 1;
         }
-        if (JsonValueType.INT.getCode().equals(value)) {
+        if (JsonValueType.INT.equals(value)) {
             return 2;
         }
-        if (JsonValueType.DOUBLE.getCode().equals(value)) {
+        if (JsonValueType.DOUBLE.equals(value)) {
             return 3;
         }
-        if (JsonValueType.BOOLEAN.getCode().equals(value)) {
+        if (JsonValueType.BOOLEAN.equals(value)) {
             return 4;
         }
         if (value instanceof ArrayList) {
@@ -254,8 +254,8 @@ public class JsonTopologyUtil {
 
         for (Object item : topologyList) {
             // primitive
-            if (item instanceof String) {
-                String express = parentKey + "." + item + index;
+            if (item instanceof JsonValueType) {
+                String express = parentKey + "." + ((JsonValueType) item).getCode() + index;
                 express = express.replaceAll("(\\[\\]).([\\d\\w]+)", "$2$1").replaceAll("\\.`0\\.", "");
                 expressList.add(express);
             }
@@ -272,5 +272,90 @@ public class JsonTopologyUtil {
             }
             index++;
         }
+    }
+
+    /**
+     * 转换为标准json
+     *
+     * @param json
+     * @return
+     */
+    static JSON convertToStandardJson(JSON json) {
+        List topologyList = getJsonTopology(json);
+        sortFieldTypes(topologyList);
+        JSONObject root = new JSONObject();
+        convertToStandardJson(topologyList, root, 0, 0);
+        return (JSON) root.get("`00");
+    }
+
+    /**
+     * 转换为标准json
+     *
+     * @param topologyList
+     * @param json
+     * @param level
+     * @param index
+     */
+    static void convertToStandardJson(List topologyList, JSON json, int level, int index) {
+
+        for (Object item : topologyList) {
+            String key = "" + (char) ('a' + level - 1) + formatInt(index);
+            // primitive
+            if (item instanceof JsonValueType) {
+                setValue(json, key, getStandardValue((JsonValueType) item));
+            }
+            // object
+            else if (item instanceof ArrayList) {
+                //                String key = "" + (char) ('a' + level - 1) + index;
+                JSONObject child = new JSONObject(true);
+                convertToStandardJson((List) item, child, level + 1, 0);
+                setValue(json, key, child);
+            }
+            // array
+            else if (item instanceof LinkedList) {
+
+                //                String key = "" + (char) ('a' + level - 1) + index;
+                JSONArray childArray = new JSONArray();
+                convertToStandardJson((List) item, childArray, level, index);
+                setValue(json, key, childArray);
+            }
+            index++;
+        }
+    }
+
+    static String formatInt(int num) {
+        return num > 9 ? "" + num : "0" + num;
+    }
+
+    static void setValue(JSON json, String key, Object value) {
+        if (json instanceof JSONObject) {
+            ((JSONObject) json).put(key, value);
+        } else if (json instanceof JSONArray) {
+            ((JSONArray) json).add(value);
+        }
+    }
+
+    private static Object getStandardValue(JsonValueType item) {
+        Object value = null;
+        switch (item) {
+            case NULL:
+                value = null;
+                break;
+            case STRING:
+                value = "1";
+                break;
+            case INT:
+                value = 1;
+                break;
+            case DOUBLE:
+                value = 1.0;
+                break;
+            case BOOLEAN:
+                value = true;
+                break;
+            default:
+                //nothing
+        }
+        return value;
     }
 }

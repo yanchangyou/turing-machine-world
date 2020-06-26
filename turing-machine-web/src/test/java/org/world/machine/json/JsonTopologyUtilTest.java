@@ -1,7 +1,9 @@
 package org.world.machine.json;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -119,6 +121,87 @@ public class JsonTopologyUtilTest {
                 + "}", Feature.OrderedField);
     }
 
+    private static JSONObject getJson11() {
+        return JSONObject.parseObject("{"
+                + "'a0':1,"
+                + "'a1':1.0,"
+                + "'a2':true,"
+                + "'a3':'1',"
+                + "'a4':null,"
+                + "'a5':[1],"
+                + "'a6':[1.0],"
+                + "'a7':[true],"
+                + "'a8':['1'],"
+                + "'a9':[null],"
+                + "'a10':{"
+                + "'    b0':1,"
+                + "'    b1':1.0,"
+                + "'    b2':true,"
+                + "'    b3':'1',"
+                + "'    b4':null,"
+                + "'    b5':[1],"
+                + "'    b6':[1.0],"
+                + "'    b7':[true],"
+                + "'    b8':['1'],"
+                + "'    b9':[null],"
+                + "'    b10':{'b0':1},"
+                + "'    b11':[{'b0':1}]"
+                + "     },"
+                + "'a11':[{"
+                + "     'b0':1,"
+                + "     'b1':1.0,"
+                + "     'b2':true,"
+                + "     'b3':'1',"
+                + "     'b4':null,"
+                + "     'b5':[1],"
+                + "     'b6':[1.0],"
+                + "     'b7':[true],"
+                + "     'b8':['1'],"
+                + "     'b9':[null],"
+                + "     'b10':{'b0':1},"
+                + "     'b11':[{'b0':1}]"
+                + "     }],"
+                + "'aa0':1,"
+                + "'aa1':1.0,"
+                + "'aa2':true,"
+                + "'aa3':'1',"
+                + "'aa4':null,"
+                + "'aa5':[1],"
+                + "'aa6':[1.0],"
+                + "'aa7':[true],"
+                + "'aa8':['1'],"
+                + "'aa9':[null],"
+                + "'aa10':{"
+                + "'    b0':1,"
+                + "'    b1':1.0,"
+                + "'    b2':true,"
+                + "'    b3':'1',"
+                + "'    b4':null,"
+                + "'    b5':[1],"
+                + "'    b6':[1.0],"
+                + "'    b7':[true],"
+                + "'    b8':['1'],"
+                + "'    b9':[null],"
+                + "'    b10':{'b0':1},"
+                + "'    b11':[{'b0':1}]"
+                + "     },"
+                + "'aa11':[{"
+                + "     'b0':1,"
+                + "     'b1':1.0,"
+                + "     'b2':true,"
+                + "     'b3':'1',"
+                + "     'b4':null,"
+                + "     'b5':[1],"
+                + "     'b6':[1.0],"
+                + "     'b7':[true],"
+                + "     'b8':['1'],"
+                + "     'b9':[null],"
+                + "     'b10':{'b0':1},"
+                + "     'b11':[{'b0':1}]"
+                + "     }]"
+                + "}", Feature.OrderedField);
+    }
+
     static void makeJson() {
         Map json = new LinkedHashMap();
         int fieldLength = 3;
@@ -144,6 +227,14 @@ public class JsonTopologyUtilTest {
     @Test
     public void testConvertToJsonExpress() {
         Object result = JsonTopologyUtil.convertToJsonExpress(getJson1());
-        System.out.println(result.toString().replace(',','\n'));
+        System.out.println(result.toString().replace(',', '\n'));
+    }
+
+    @Test
+    public void testConvertToStandardJson() {
+        JSON result = JsonTopologyUtil.convertToStandardJson(getJson1());
+        System.out.println(result.toString(SerializerFeature.WriteMapNullValue));
+        result = JsonTopologyUtil.convertToStandardJson(getJson11());
+        System.out.println(result.toString(SerializerFeature.WriteMapNullValue));
     }
 }
